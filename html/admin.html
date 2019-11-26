@@ -11,13 +11,18 @@
   </head>
   <body>
     <!-- Library of local video segments -->
-    <h1>Local Library</h1>
+    <h2>Local Library</h2>
+    <p>Local video segments can be viewed below</p>
     <section id=segments>
       <!-- Dynamically filled -->
     </section>
 
     <!-- List of remote sites-->
-    <h1>Remote Sites</h1>
+    <h2>Remote Sites</h2>
+    <form name="addRemoteForm" method="post">
+      Name: <input name="remoteURL"/>
+      <input type="button" id="remoteButton" value="Add" disabled>
+    </form>
     <section id=remotes>
       <!-- Dynamically filled -->
     </section>
