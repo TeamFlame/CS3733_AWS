@@ -11,13 +11,34 @@ public class Library
 		
 	}
 	
-	void createPlaylist()
+	void createPlaylist(String name)
 	{
-		
+		playlists[playlists.length] = new Playlist(name);
 	}
 	void deletePlaylist(Playlist playlist)
 	{
-		
+		boolean deletedFound = false;
+		//true if one that is to be deleted has been found
+		for(int i = 0; i <this.playlists.length; i++)
+		{
+			if(playlists[i].equals(playlist))
+			{
+				playlists[i]=playlists[i+1];
+				deletedFound = true;
+				//if deleted one is found, the next array spot replaces it, and flag is triggered
+			}
+			if (deletedFound == true && i < playlists.length-1)
+			{
+				playlists[i]=playlists[i+1];
+				//shifts down all of the playlists after the deleted one as not to leave gaps
+			}
+			else if(deletedFound == true)
+			{
+				playlists[i]=null;
+				//sets final array space to null to make sure its empty
+				
+			}
+		}
 	}
 	void uploadClip(VideoClip clip)
 	{
