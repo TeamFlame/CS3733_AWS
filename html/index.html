@@ -11,17 +11,30 @@
   </head>
   <body>
     <!-- Library of video segments -->
-    <h1>Library</h1>
-    <h3>Available video segments can be viewed below</h3>
-    <section id=segments>
+    <h2>Library</h2>
+    <p>Available video segments can be viewed below</p>
+    <p>Or search using the form</p>
+    <form name="searchForm" method="post">
+      Character Name: <input name="characterName"/>
+      Dialogue: <input name="dialogue"/>
+      <input type="button" id="searchButton" value="Search" disabled>
+    </form>
+    <div id=segments>
       <!-- Dynamically filled -->
-    </section>
+    </div>
+
+    <br><br><br>
 
     <!-- Library of playlists -->
-    <h1>Playlists</h1>
-    <section id=playlists>
+    <h2>Playlists</h2>
+    <p>Pre-made playlists can be viewed below, or make your own</p>
+    <form name="createPlaylistForm" method="post">
+        Name: <input name="characterName"/>
+        <input type="button" id="createButton" value="Create" disabled>
+      </form>
+    <div id=playlists>
       <!-- Dynamically filled -->
-    </section>
+    </div>
 
     <!-- Bootstrap JavaScript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

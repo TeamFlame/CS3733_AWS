@@ -4,11 +4,11 @@
 const express = require('express'), app = express();
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/participant.html');
+  res.sendFile(__dirname + '/html/index.html');
 });
 
 app.get('/admin', function(req, res) {
-  res.sendFile(__dirname + '/admin.html');
+  res.sendFile(__dirname + '/html/admin.html');
 });
 
 const listener = app.listen(process.env.PORT || 3000, function() {
