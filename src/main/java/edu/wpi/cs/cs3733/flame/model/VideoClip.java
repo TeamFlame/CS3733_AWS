@@ -14,35 +14,35 @@ public class VideoClip {
 		this.remoteAccess = remoteAccess;
 	}
 	
-	void setCharacter(String character)
+	public void setCharacter(String character)
 	{
 		this.character=character;
 	}
-	String getCharacter()
+	public String getCharacter()
 	{
 		return this.character;
 	}
-	void setText(String text)
+	public void setText(String text)
 	{
 		this.text=text;
 	}
-	String getText()
+	public String getText()
 	{
 		return this.text;
 	}
-	void setBucketURI(String newURI)
+	public void setBucketURI(String newURI)
 	{
 		this.bucketURI=newURI;
 	}
-	String getBucketURI()
+	public String getBucketURI()
 	{
 		return this.bucketURI;
 	}
-	void setRemoteAccess(boolean access)
+	public void setRemoteAccess(boolean access)
 	{
 		this.remoteAccess = access;
 	}
-	boolean getRemoteAccess()
+	public boolean getRemoteAccess()
 	{
 		return this.remoteAccess;
 	}

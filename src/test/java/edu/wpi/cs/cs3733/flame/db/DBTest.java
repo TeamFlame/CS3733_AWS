@@ -28,6 +28,9 @@ public class DBTest {
 		VideoClipsDAO dao = new VideoClipsDAO();
 		try {
 			List<VideoClip> clips = dao.getAllClips();
+			for(VideoClip c : clips) {
+				System.out.println("URI: " + c.getBucketURI());
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage().toString());

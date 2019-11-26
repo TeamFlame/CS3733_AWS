@@ -20,6 +20,9 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 
+import edu.wpi.cs.cs3733.flame.TestContext;
+import edu.wpi.cs.cs3733.flame.TestUtils;
+
 /**
  * A simple test harness for locally invoking your Lambda function handler.
  */
