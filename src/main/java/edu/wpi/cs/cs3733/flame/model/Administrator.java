@@ -9,7 +9,7 @@ public class Administrator {
 	
 	void setAccess(VideoClip vc, boolean b)
 	{
-		
+		vc.setRemoteAccess(b);
 	}
 	
 	public Administrator()
