@@ -1,4 +1,4 @@
-package com.amazonaws.lambda.demo;
+package edu.wpi.cs.cs3733.flame.model;
 
 public class Administrator {
 
@@ -9,7 +9,7 @@ public class Administrator {
 	
 	void setAccess(VideoClip vc, boolean b)
 	{
-		
+		vc.setRemoteAccess(b);
 	}
 	
 	public Administrator()
