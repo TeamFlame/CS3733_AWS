@@ -3,65 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <title>Team Flame CS3733</title>
+    <script type='text/javascript' src='../js/videos.js'></script>
+    <script type='text/javascript' src='../js/playlists.js'></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <title>Team Flame CS3733</title>
+    
 
     <script type="text/javascript">
-/**
- * Retrieve list of videos in library from server
- * 
- * GET getVideos_url
- * Response array of VideoClip JSON objects
- */
-function getVideos() {
-  console.log('click')
-  var xhr = new XMLHttpRequest();
-  // TODO Define URL used here
-  //xhr.open('GET', getVideos_url, true);
-  xhr.open('GET', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/videos', true);
-  xhr.send();
-
-  xhr.onloadend = function() {    
-    if(xhr.readyState == XMLHttpRequest.DONE) {
-      console.log('XHR:' + xhr.response);
-      displayVideos(xhr.response);
+    function init() {
+      getVideos();
+      getPlaylists();
     }
-  };
-};
-
-/**
- * Displays available videos on the page
- */
-function displayVideos(videoList) {
-  console.log('Displaying videos');
-  var segmentSection = document.getElementById('segments');
-  var js = JSON.parse(videoList);
-  console.log(js);
-  var videoList = js.list;
-
-  // For each video 
-  for(let i = 0; i < videoList.length; i++) {
-    let video = videoList[i];
-    console.log(video);
-    //  create and append a new video element
-    var videoElement = document.createElement('video');
-
-    // Set attributes
-    videoElement.setAttribute('src', video.bucketURI); // TODO see if the bucketURI is the correct source URL
-    videoElement.setAttribute('width', '400');
-    videoElement.setAttribute('height', '300');
-    videoElement.setAttribute('controls', 'controls'); // TODO necessary???
-
-    // Append to doc
-    segmentSection.appendChild(videoElement);
-  };
-};
     </script>
   </head>
-  <body>
+  <body onload="init()">
+    <h1>Welcome, Participant</h1><br>
     <!-- Library of video segments -->
     <input type="button" id="videosButton" value="Get Videos" onclick="Javascript:getVideos()">
     <h2>Library</h2>
@@ -71,7 +28,7 @@ function displayVideos(videoList) {
       Character Name: <input name="characterName"/>
       Dialogue: <input name="dialogue"/>
       <input type="button" id="searchButton" value="Search" disabled>
-    </form>
+    </form><br>
     <div id=segments>
       <!-- Dynamically filled -->
     </div>
@@ -79,12 +36,13 @@ function displayVideos(videoList) {
     <br><br><br>
 
     <!-- Library of playlists -->
+    <input type="button" id="playlistsButton" value="Get Playlists" onclick="Javascript:getPlaylists()">
     <h2>Playlists</h2>
     <p>Pre-made playlists can be viewed below, or make your own</p>
     <form name="createPlaylistForm" method="post">
         Name: <input name="characterName"/>
         <input type="button" id="createButton" value="Create" disabled>
-    </form>
+    </form><br>
     <div id=playlists>
       <!-- Dynamically filled -->
     </div>
