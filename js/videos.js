@@ -7,7 +7,8 @@
 function getVideos() {
   var xhr = new XMLHttpRequest();
   // TODO Define URL used here
-  xhr.open('GET', getVideos_url, true);
+  //xhr.open('GET', getVideos_url, true);
+  xhr.open('GET', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/videos', true);
   xhr.send();
 
   xhr.onloadend = function() {    
@@ -20,8 +21,6 @@ function getVideos() {
 
 /**
  * Displays available videos on the page
- * 
- * 
  */
 function displayVideos(videoList) {
   var segmentSection = document.getElementById('segments');
@@ -42,4 +41,10 @@ function displayVideos(videoList) {
     // Append to doc
     segmentSection.appendChild(videoElement);
   });
+};
+
+window.onload = function() {
+  getVideoButton = document.getElementById(videosButton);
+  getVideoButton.onclick = this.getVideos();
+  this.console.log('click setup done');
 };
