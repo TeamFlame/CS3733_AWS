@@ -4,7 +4,7 @@
  * GET getVideos_url
  * Response array of VideoClip JSON objects
  */
-function getVideos() {
+function getVideos(isAdmin) {
   console.log('click')
   var xhr = new XMLHttpRequest();
   // TODO Define URL used here
@@ -15,7 +15,7 @@ function getVideos() {
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
       console.log('XHR:' + xhr.response);
-      displayVideos(xhr.response);
+      displayVideos(xhr.response, isAdmin);
     }
   };
 };
@@ -23,7 +23,7 @@ function getVideos() {
 /**
  * Displays available videos on the page
  */
-function displayVideos(videoList) {
+function displayVideos(videoList, isAdmin) {
   console.log('Displaying videos');
   var segmentSection = document.getElementById('segments');
   var js = JSON.parse(videoList);
@@ -48,6 +48,17 @@ function displayVideos(videoList) {
 
     // Append to doc
     segmentSection.appendChild(videoElement);
+
+    
+    // Add marking button for admins
+    if(isAdmin) {
+      let markButton = document.createElement('input');
+      markButton.setAttribute('type', 'button');
+      markButton.setAttribute('value', 'Mark for Remote Access');
+      markButton.setAttribute('disabled', 'disabled');
+      segmentSection.appendChild(markButton);
+      segmentSection.innerHTML += '<br>';
+    }
   };
 };
 

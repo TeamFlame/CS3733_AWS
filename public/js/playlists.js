@@ -46,6 +46,7 @@ function displayPlaylists(playlistList) {
     deleteButton.setAttribute('type', 'button');
     deleteButton.setAttribute('value', 'Delete');
     deleteButton.setAttribute('id', playlist.name);
+    deleteButton.setAttribute('disabled', 'disabled');
     playlistSection.appendChild(deleteButton);
     playlistSection.innerHTML += '<br><br>'
 

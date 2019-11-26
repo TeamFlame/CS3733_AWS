@@ -12,15 +12,20 @@
 
     <script type="text/javascript">
     function init() {
-      getVideos();
+      getVideos(false);
       getPlaylists();
     }
     </script>
   </head>
   <body onload="init()">
-    <h1>Welcome, Participant</h1><br>
+    <h1>Welcome, Participant</h1>
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div>
+        <a class="navbar-brand" href="/admin">Toggle Admin</a>
+      </div>
+    </nav>
+
     <!-- Library of video segments -->
-    <input type="button" id="videosButton" value="Get Videos" onclick="Javascript:getVideos()">
     <h2>Library</h2>
     <p>Available video segments can be viewed below</p>
     <p>Or search using the form</p>
@@ -29,21 +34,20 @@
       Dialogue: <input name="dialogue"/>
       <input type="button" id="searchButton" value="Search" disabled>
     </form><br>
-    <div id=segments>
+    <div id="segments">
       <!-- Dynamically filled -->
     </div>
 
     <br><br><br>
 
     <!-- Library of playlists -->
-    <input type="button" id="playlistsButton" value="Get Playlists" onclick="Javascript:getPlaylists()">
     <h2>Playlists</h2>
     <p>Pre-made playlists can be viewed below, or make your own</p>
     <form name="createPlaylistForm" method="post">
-        Name: <input name="characterName"/>
+        Name: <input name="playlistName"/>
         <input type="button" id="createButton" value="Create" disabled>
     </form><br>
-    <div id=playlists>
+    <div id="playlists">
       <!-- Dynamically filled -->
     </div>
 

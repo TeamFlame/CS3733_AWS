@@ -3,29 +3,52 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <title>Team Flame CS3733 Admin Page</title>
+    <script type='text/javascript' src='../js/videos.js'></script>
+    <script type='text/javascript' src='../js/playlists.js'></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
 
-    <title>Team Flame Admin Page</title>
+    <script type="text/javascript">
+    function init() {
+      getVideos(true);
+    }
+    </script>
   </head>
-  <body>
-    <!-- Library of local video segments -->
+  <body onload="init()">
+    <h1>Welcome, Administrator</h1>
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div>
+        <a class="navbar-brand" href="/">Toggle Admin</a>
+      </div>
+    </nav>
+
+    <!-- Library of video segments -->
     <h2>Local Library</h2>
     <p>Local video segments can be viewed below</p>
-    <section id=segments>
+    <p>Or search using the form</p>
+    <form name="searchForm" method="post">
+      Character Name: <input name="characterName"/>
+      Dialogue: <input name="dialogue"/>
+      <input type="button" id="searchButton" value="Search" disabled>
+    </form><br>
+    <div id=segments>
       <!-- Dynamically filled -->
-    </section>
+    </div>
 
-    <!-- List of remote sites-->
+    <br><br><br>
+
+    <!-- Library of remote sites -->
     <h2>Remote Sites</h2>
+    <p>Registered remote sites can be found below, or changed via the form</p>
     <form name="addRemoteForm" method="post">
-      Name: <input name="remoteURL"/>
-      <input type="button" id="remoteButton" value="Add" disabled>
-    </form>
-    <section id=remotes>
+        URL: <input name="remoteURL"/>
+        <input type="button" id="remoteButton" value="Add" disabled>
+    </form><br>
+    <div id=remotes>
       <!-- Dynamically filled -->
-    </section>
+    </div>
 
     <!-- Bootstrap JavaScript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
