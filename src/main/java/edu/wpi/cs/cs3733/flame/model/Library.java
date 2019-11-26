@@ -42,7 +42,6 @@ public class Library
 	}
 	void uploadClip(VideoClip clip)
 	{
-
 		clipList[clipList.length] = clip;
 	}
 	void deleteClip(VideoClip clip)
