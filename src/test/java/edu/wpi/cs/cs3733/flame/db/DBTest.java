@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import edu.wpi.cs.cs3733.flame.model.VideoClip;
+import edu.wpi.cs.cs3733.flame.model.*;
 
 public class DBTest {
 
@@ -28,10 +28,27 @@ public class DBTest {
 		VideoClipsDAO dao = new VideoClipsDAO();
 		try {
 			List<VideoClip> clips = dao.getAllClips();
+			for(VideoClip c : clips) {
+				System.out.println("URI: " + c.getBucketURI());
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage().toString());
 		}
 	}	
 
+	
+	@Test
+	public void test3() {
+		PlaylistsDAO dao = new PlaylistsDAO();
+		try {
+			List<Playlist> playlists = dao.getAllPlaylists();
+			for(Playlist p : playlists) {
+				System.out.println("URI: " + p.getName());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage().toString());
+		}
+	}	
 }

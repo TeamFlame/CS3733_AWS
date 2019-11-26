@@ -46,7 +46,7 @@ private VideoClip getClip(ResultSet resultSet) throws Exception {
     String text = resultSet.getString("text");
     String character = resultSet.getString("character");
     Boolean remoteAccess = resultSet.getBoolean("remoteAccess");
-    return new VideoClip (URI, text, character, remoteAccess);
+    return new VideoClip (URI, character, text, remoteAccess);
 }
     
 }
