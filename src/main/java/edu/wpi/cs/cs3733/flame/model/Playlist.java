@@ -1,9 +1,13 @@
 package edu.wpi.cs.cs3733.flame.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Playlist 
 {
+	String uuid;
 	String name;
-	PlaylistItem[] items;
+	List<PlaylistItem> items = new ArrayList<PlaylistItem>();
 
 
 	public Playlist(String name)
@@ -14,53 +18,62 @@ public class Playlist
 		this.name = name;
 	}
 
-	void updateOrder(PlaylistItem[] item)
+	public Playlist(String uuid, String name) {
+		this.uuid = uuid;
+		this.name = name;
+	}
+
+	void updateOrder(List<PlaylistItem> item)
 	{
 		this.items = item;
 	}
 	void appendClip(VideoClip clip)//I'm not too sure about this one
 	{ 
-		PlaylistItem item = new PlaylistItem(items.length, clip.bucketURI + clip.character +clip.text);//made this as the clipID since i don't know what 
+		PlaylistItem item = new PlaylistItem(items.size(), clip.bucketURI + clip.character +clip.text);//made this as the clipID since i don't know what 
 		//we are using and this will definitely be unique
-		items[items.length]=item;
+		items.add(item);
 	}
 	void removeItem(PlaylistItem item)
 	{
 		boolean deletedFound = false;
-		for(int i = 0; i <this.items.length; i++)
+		for(int i = 0; i <this.items.size(); i++)
 		{
-			if(items[i].equals(item))
+			if(items.get(i).equals(item))
 			{
-				items[i]=items[i+1];
+				items.set(i, items.get(i+1));
 				deletedFound = true;
 				//if deleted one is found, the next array spot replaces it, and flag is triggered
 			}
-			if (deletedFound == true && i < items.length-1)
+			if (deletedFound == true && i < items.size()-1)
 			{
-				items[i]=items[i+1];
+				items.set(i, items.get(i+1));
 				//shifts down all of the playlists after the deleted one as not to leave gaps
 			}
 			else if(deletedFound == true)
 			{
-				items[i]=null;
+				items.remove(i);
 				//sets final array space to null to make sure its empty
 				
 			}
 		}
 	}
+	
+	void removeItemList(PlaylistItem delItem) {
+		this.items.remove(delItem);
+	}
 	void setName(String name)
 	{
 		this.name=name;
 	}
-	String getName()
+	public String getName()
 	{
 		return this.name;
 	}
-	void setItems(PlaylistItem[] items)
+	void setItems(List<PlaylistItem> items)
 	{
 		this.items = items;
 	}
-	PlaylistItem[] getItems()
+	List<PlaylistItem> getItems()
 	{
 		return this.items;
 	}

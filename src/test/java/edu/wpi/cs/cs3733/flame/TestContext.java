@@ -1,4 +1,4 @@
-package com.amazonaws.lambda.demo;
+package edu.wpi.cs.cs3733.flame;
 
 import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;
