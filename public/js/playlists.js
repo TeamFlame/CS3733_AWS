@@ -48,21 +48,75 @@ function displayPlaylists(playlistList) {
     deleteButton.setAttribute('id', playlist.name);
     deleteButton.setAttribute('disabled', 'disabled');
     playlistSection.appendChild(deleteButton);
-    playlistSection.innerHTML += '<br><br>'
 
     // Add videos inside playlist
     // TODO write this
+
+    playlistSection.innerHTML += '<br><br>'
   };
 };
 
-function createPlaylist() {
+/**
+ * Creates a new empty playlist with given name
+ * 
+ * TODO
+ */
+function createPlaylist(name) {
+  console.log('Creating playlist:', name);
+  var xhr = new XMLHttpRequest();
+  // TODO Define URL used here
+  //xhr.open('POST', getPlaylists_url, true);
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlist', true);
+  xhr.send({PlaylistName: name});
 
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('XHR:' + xhr.response);
+      getPlaylists();
+    }
+  };
 };
 
-function deletePlaylist() {
+/**
+ * Deletes the playlist of the given name from the library
+ * 
+ * TODO
+ */
+function deletePlaylist(name) {
+  console.log('Deleting playlist:', name);
+  var xhr = new XMLHttpRequest();
+  // TODO Define URL used here
+  //xhr.open('POST', getPlaylists_url, true);
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/deletePlaylist', true);
+  xhr.send({PlaylistName: name});
 
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('XHR:' + xhr.response);
+      getPlaylists();
+    }
+  };
 };
 
-function searchSegment() {
-  
+/**
+ * Searches for a videoclip witrh given dialogue (text) and/or characters (char)
+ * 
+ * TODO
+ */
+function searchSegment(text, char) {
+  console.log('Searching text:', text);
+  console.log('Searching character:', char);
+  var xhr = new XMLHttpRequest();
+  // TODO Define URL used here
+  //xhr.open('POST', getPlaylists_url, true);
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/searchVideo', true);
+  xhr.send(text, char);
+
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('XHR:' + xhr.response);
+      // Do something
+    }
+  };
+
 };
