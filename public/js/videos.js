@@ -15,17 +15,20 @@ function getVideos(isAdmin) {
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
       console.log('XHR:' + xhr.response);
-      displayVideos(xhr.response, isAdmin);
+      displayVideos(xhr.response, isAdmin, 'segments');
     }
   };
 };
 
 /**
- * Displays available videos on the page
+ * Displays available videos on the page in the given section
+ * 
+ * param section must be either 'segments' or 'playlists'
  */
-function displayVideos(videoList, isAdmin) {
+function displayVideos(videoList, isAdmin, section) {
   console.log('Displaying videos');
-  var segmentSection = document.getElementById('segments');
+  var segmentSection = document.getElementById(section);
+  segmentSection.innerHTML = '';
   var js = JSON.parse(videoList);
   console.log(js);
   var videoList = js.list;
@@ -62,8 +65,36 @@ function displayVideos(videoList, isAdmin) {
   };
 };
 
-window.onload = function() {
-  getVideoButton = document.getElementById(videosButton);
-  getVideoButton.onclick = this.getVideos();
-  this.console.log('click setup done');
+/**
+ * Searches for a videoclip with given dialogue (text) and/or characters (char)
+ * 
+ * TODO
+ */
+function searchSegment(char, text) {
+  console.log('Searching text:', text);
+  console.log('Searching character:', char);
+  var xhr = new XMLHttpRequest();
+  // TODO Define URL used here
+  //xhr.open('POST', getPlaylists_url, true);
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/searchVideo', true);
+  xhr.send({
+    character: char,
+    dialogue: text
+  });
+
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('XHR:' + xhr.response);
+      // Do something
+    }
+  };
+
+};
+
+function uploadSegment() {
+
+};
+
+function deleteSegment() {
+
 };
