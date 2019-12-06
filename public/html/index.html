@@ -30,9 +30,16 @@
     <p>Available video segments can be viewed below</p>
     <p>Or search using the form</p>
     <form name="searchForm" method="post">
-      Character Name: <input name="characterName"/>
-      Dialogue: <input name="dialogue"/>
-      <input type="button" id="searchButton" value="Search" disabled>
+      Character Name: <input type="text" name="characterName" id ="characterName"/>
+      Dialogue: <input type="text" name="dialogue" id ="dialogue"/>
+      <input type="button" id="searchButton" value="Search">
+      <script type="text/javascript">
+      document.getElementById('searchButton').onclick = function() {
+    	  doSearch(document.getElementByID("characterName")
+ 				   document.getElementByID("dialogue"));			 				
+    	}​;​
+ 		 
+	</script>
     </form><br>
     <div id="segments">
       <!-- Dynamically filled -->
