@@ -85,6 +85,7 @@ function displayContents(playlistName) {
  * TODO Test with lambda
  */
 function createPlaylist(name) {
+  if(name === '') {return;}
   console.log('Creating playlist:', name);
   var xhr = new XMLHttpRequest();
   // TODO Define URL used here
