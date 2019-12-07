@@ -46,12 +46,13 @@ function displayPlaylists(playlistList) {
     deleteButton.setAttribute('type', 'button');
     deleteButton.setAttribute('value', 'Delete');
     deleteButton.setAttribute('id', playlist.name);
-    deleteButton.setAttribute('disabled', 'disabled');
+    //deleteButton.setAttribute('disabled', 'disabled');
+    deleteButton.setAttribute('onclick', 'deletePlaylist(this.id)')
     playlistSection.appendChild(deleteButton);
 
     // Add videos inside playlist
     // TODO deal with async JS stuff here
-    displayContents(playlist);
+    //displayContents(playlist);
     
     playlistSection.innerHTML += '<br><br>'
   };
@@ -67,7 +68,7 @@ function displayContents(playlistName) {
   // TODO Define URL used here
   //xhr.open('POST', getPlaylists_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlistVideos', true);
-  xhr.send(name);
+  xhr.send({name: name});
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
@@ -89,7 +90,9 @@ function createPlaylist(name) {
   // TODO Define URL used here
   //xhr.open('POST', getPlaylists_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlist', true);
-  xhr.send(name);
+  //xhr.setRequestHeader('Access-Control-Allow-Origin', '');
+  //xhr.setRequestHeader('content-type', 'application/json');
+  xhr.send({name: name});
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
@@ -134,7 +137,7 @@ function deletePlaylist(name) {
   // TODO Define URL used here
   //xhr.open('POST', getPlaylists_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/deletePlaylist', true);
-  xhr.send(name);
+  xhr.send({name: name});
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
