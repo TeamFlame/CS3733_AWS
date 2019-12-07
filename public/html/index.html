@@ -9,7 +9,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
-
     <script type="text/javascript">
     function init() {
       getVideos(false);
@@ -32,7 +31,13 @@
     <form name="searchForm">
       Character Name: <input name="characterName"/>
       Dialogue: <input name="dialogue"/>
-      <input type="button" id="searchButton" value="Search" disabled>
+      <input type="button" id="searchButton" value="Search" onclick="searchSegment(searchForm.characterName.value, searchForm.dialogue.value, false)">
+      <input type="button" id="resetButton" value="Clear" onclick="getVideos(false)"/>
+    </form><br>
+    <form name="uploadForm">
+      Upload a new clip: 
+      <input type="file" name="clipFile" id="clipFile">
+      <input type="button" id="uploadButton" value="Upload">
     </form><br>
     <div id="segments">
       <!-- Dynamically filled -->

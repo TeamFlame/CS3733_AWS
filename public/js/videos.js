@@ -69,7 +69,7 @@ function displayVideos(videoList, isAdmin, section) {
  * 
  * TODO
  */
-function searchSegment(char, text) {
+function searchSegment(char, text, isAdmin) {
   console.log('Searching text:', text);
   console.log('Searching character:', char);
 
@@ -86,7 +86,7 @@ function searchSegment(char, text) {
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
       console.log('Response:' + xhr.response);
-      displaySearch(xhr.response, char, text, searchType);
+      displaySearch(xhr.response, char, text, isAdmin);
     }
   };
 
@@ -95,9 +95,9 @@ function searchSegment(char, text) {
 /**
  * Searches for and displaysz results of a given search query
  */
-function displaySearch(videoList, char, text, searchType) {
+function displaySearch(videoList, char, text, isAdmin) {
   console.log('Displaying search results');
-  var segmentSection = document.getElementById(section);
+  var segmentSection = document.getElementById('segments');
   segmentSection.innerHTML = '';
   var js = JSON.parse(videoList);
   console.log(js);
@@ -105,17 +105,17 @@ function displaySearch(videoList, char, text, searchType) {
 
   // Search using character and text fields
   var charSearch = searchByType(videoList, char, 'char');
-  var textSearch = searchByText(videoList, text, 'text');
+  var textSearch = searchByType(videoList, text, 'text');
   var searchList = [];
 
   // Get overlap if both have videos (search via both vs by one)
-  if(charSearch.length === 0) {
+  if(charSearch && charSearch.length === 0) {
     if(textSearch.length === 0) {return;}
     searchList = textSearch;
   }
-  else if(textSearch.length === 0) {searchList = charSearch;}
+  else if(textSearch && textSearch.length === 0) {searchList = charSearch;}
   else charSearch.forEach(videoURI => {
-    if(textSearch.contains(videoURI)) {
+    if(textSearch.includes(videoURI)) {
       searchList.push(videoURI);
     }
   })
@@ -161,19 +161,18 @@ function displaySearch(videoList, char, text, searchType) {
  */
 function searchByType(videoList, query, type) {
   let result = [];
-  if(query === '') {return;}
+  if(query != '') {
+    for(let i = 0; i < videoList.length; i++) {
+      let video = videoList[i];
 
-  for(let i = 0; i < videoList.length; i++) {
-    let video = videoList[i];
-    
-    if(type === 'char' && video.character == query) {
-      result.push(video.bucketURI);
-    }
-    if(type === 'text' && video.text.contains(query)) {
-      result.push(video.bucketURI);
+      if(type === 'char' && video.character == query) {
+        result.push(video.bucketURI);
+      }
+      if(type === 'text' && video.text.includes(query)) {
+        result.push(video.bucketURI);
+      }
     }
   }
-
   return result;
 };
 
