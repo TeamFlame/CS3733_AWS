@@ -66,3 +66,30 @@ function deletePlaylist() {
 function searchSegment() {
   
 };
+/**
+* This function should append a video to a playlist
+* 
+*/
+
+function appendtoPlaylist(name,video)
+{
+	console.log('Gathering playlists');
+	  var playlistSection = document.getElementById('playlists');
+
+	  // TODO figure how to access list of playlists from response 
+	  var js = JSON.parse(playlistList);
+	  console.log(js);
+	  var playlistList = js.list;
+	  
+	  for(let i = 0; i < playlistList.length; i++) 
+	  {
+		    let playlist = playlistList[i];
+		    console.log(playlist);
+		    if (playlist.name == name)
+		    	{
+		    	   playlist.items.push(video)
+		    	}
+	  }
+	  //would probably upload the new playlist here, not quite sure how to do this even after looking at backend
+	  //really, really, hoping this goes here
+ }

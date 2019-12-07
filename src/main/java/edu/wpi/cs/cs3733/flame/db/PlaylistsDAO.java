@@ -96,4 +96,21 @@ public class PlaylistsDAO {
 			throw new Exception("Failed to create playlist: " + e.getMessage());
 		}
 	}
+<<<<<<< Updated upstream
+=======
+	
+	public boolean deletePlaylist(Playlist playlist) throws Exception {
+		try {
+			PreparedStatement ps = conn.prepareStatement("DELETE FROM Playlists name = ?;");
+			ps.setString(1, playlist.getName());
+			int numAffected = ps.executeUpdate();
+			ps.close();
+            return (numAffected == 1);
+		}
+		catch (Exception e) {
+			throw new Exception("Failed to delete playlist: " + e.getMessage());
+		}
+	}
+	
+>>>>>>> Stashed changes
 }
