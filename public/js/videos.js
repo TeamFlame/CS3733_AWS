@@ -193,11 +193,19 @@ function getBase64(file) {
  * Uploads a given video segment tot he application library
  */
 function uploadSegment(base64) {
+  let char = document.charField.value;
+  let text = document.textField.value;
+
   var xhr = new XMLHttpRequest();
   // TODO Define URL used here
   //xhr.open('GET', getVideos_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/videos', true);
-  xhr.send(JSON.stringify({base64EncodedString: base64}));
+  xhr.send(JSON.stringify({
+    base64EncodedString: base64,
+    character: char,
+    text: text,
+    remoteAccess: false
+  }));
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {

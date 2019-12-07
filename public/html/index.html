@@ -31,18 +31,19 @@
     <form name="searchForm">
       Character Name: <input name="characterName"/>
       Dialogue: <input name="dialogue"/>
-      <input type="button" id="searchButton" value="Search" onclick="searchSegment(searchForm.characterName.value, searchForm.dialogue.value, false)">
-      <input type="button" id="resetButton" value="Clear" onclick="getVideos(false)"/>
-    </form><br>
-    <form name="uploadForm">
-      Upload a new clip: 
-      <input type="file" name="clipFile" id="clipFile">
-      <input type="button" id="uploadButton" value="Upload" onclick="getBase64(uploadForm.clipFile.value)">
+      <input type="button" id="searchButton" value="Search" onclick="searchSegment(characterName.value, dialogue.value, false)">
+      <input type="button" id="resetButton" value="Reset" onclick="getVideos(false)"/>
     </form><br>
     <div id="segments">
       <!-- Dynamically filled -->
-    </div>
-
+    </div><br><br>
+    <form name="uploadForm">
+      Upload a new clip: 
+      <input type="file" name="clipFile" id="clipFile"><br>
+      Character: <input name="charField"/>
+      Transcript: <input name="textField"/>
+      <input type="button" id="uploadButton" value="Upload" onclick="getBase64(clipFile.value)">
+    </form><br>
     <br><br><br>
 
     <!-- Library of playlists -->
