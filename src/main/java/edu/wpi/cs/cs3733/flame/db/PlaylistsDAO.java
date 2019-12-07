@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.wpi.cs.cs3733.flame.db.DatabaseUtil;
 import edu.wpi.cs.cs3733.flame.model.Playlist;
@@ -81,12 +82,13 @@ public class PlaylistsDAO {
 	
 	public boolean createPlaylist(Playlist playlist) throws Exception {
 		try {
-			Statement statement = conn.createStatement();
-			String query = "SELECT * FROM Playlists WHERE name = ?;";
-			ResultSet resultSet = statement.executeQuery(query);
+//			Statement statement = conn.createStatement();
+//			String query = "SELECT * FROM Playlists WHERE name = ?;";
+//			ResultSet resultSet = statement.executeQuery(query);
 			
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO constants name values ?;");
-			ps.setString(1, playlist.getName());
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO Playlists (uuid,name) values (?,?);");
+			ps.setString(1, UUID.randomUUID().toString());
+			ps.setString(2, playlist.getName());
 			ps.execute();
 			return true;
 		}
