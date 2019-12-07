@@ -7,20 +7,23 @@ public class CreatePlaylistResponse {
 	 * if an error of some sort, then the response describes that error.
 	 * 
 	 */
-	public final String response;
-	public final int httpCode;
+	public final int statusCode;
+	public String error;
 
-	public CreatePlaylistResponse (String s, int code) {
-			this.response = s;
-			this.httpCode = code;
+	public CreatePlaylistResponse (int code) {
+			this.statusCode = code;
 		}
 
-	public CreatePlaylistResponse (String s) {
-			this.response = s;
-			this.httpCode = 200;
+	public CreatePlaylistResponse () {
+			this.statusCode = 200;
 		}
-
+	
+	public CreatePlaylistResponse(String error, int statusCode) {
+		this.statusCode = statusCode;
+		this.error = error;
+	}
+	
 	public String toString() {
-		return "Response(" + response + ")";
+		return "CreatePlaylistResponse()";
 	}
 }

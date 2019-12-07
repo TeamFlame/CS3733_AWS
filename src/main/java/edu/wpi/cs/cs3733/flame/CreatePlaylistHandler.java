@@ -29,10 +29,10 @@ public class CreatePlaylistHandler implements RequestHandler<CreatePlaylistReque
 		
 		try {
 			if(createPlaylist(req.name)) {
-				response = new CreatePlaylistResponse(req.name);
+				response = new CreatePlaylistResponse();
 			}
 			else {
-				response = new CreatePlaylistResponse(req.name, 422);
+				response = new CreatePlaylistResponse(422);
 			}
 		}
 		catch (Exception e) {
