@@ -37,7 +37,7 @@
     <form name="uploadForm">
       Upload a new clip: 
       <input type="file" name="clipFile" id="clipFile">
-      <input type="button" id="uploadButton" value="Upload">
+      <input type="button" id="uploadButton" value="Upload" onclick="getBase64(uploadForm.clipFile.value)">
     </form><br>
     <div id="segments">
       <!-- Dynamically filled -->

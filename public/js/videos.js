@@ -177,13 +177,37 @@ function searchByType(videoList, query, type) {
 };
 
 /**
- * Uploads a given videosegment tot he application library
- * 
- * TODO determine what form the input will come in (string?)
+ * Converts video file to base64 string
  */
-function uploadSegment() {
-
+function getBase64(file) {
+  if(!file) {return;}
+  var reader = new FileReader();
+  reader.readAsDataURL(file);
+  
+  reader.onload = function() {
+    uploadSegment(reader.result);
+  };
 };
+
+/**
+ * Uploads a given video segment tot he application library
+ */
+function uploadSegment(base64) {
+  var xhr = new XMLHttpRequest();
+  // TODO Define URL used here
+  //xhr.open('GET', getVideos_url, true);
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/videos', true);
+  xhr.send(JSON.stringify({base64EncodedString: base64}));
+
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('Response:' + xhr.response);
+      displayVideos(xhr.response, false, 'segments');
+    }
+  };
+};
+
+
 
 /**
  * Delete a given vcideo segment from the library
