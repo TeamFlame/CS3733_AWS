@@ -94,5 +94,4 @@ public class PlaylistsDAO {
 			throw new Exception("Failed to create playlist: " + e.getMessage());
 		}
 	}
-
 }

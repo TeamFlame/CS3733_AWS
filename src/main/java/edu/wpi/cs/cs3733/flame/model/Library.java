@@ -1,109 +1,78 @@
 package edu.wpi.cs.cs3733.flame.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Library 
 {
-	Playlist[] playlists;
-	VideoClip[] clipList;
-	String[] remoteSites;
+	List<Playlist> playlists;
+	List<VideoClip> clipList;
+	List<String> remoteSites;
+	
+	Library singleton = null;
 
-	public Library()
+	private Library()
 	{
-		
+		playlists = new ArrayList<Playlist>();
+		clipList = new ArrayList<VideoClip>();
+		remoteSites = new ArrayList<String>();
+	}
+	
+	public Library getInstance() {
+		if (singleton == null) {
+			singleton = new Library();
+		}
+		return singleton;
 	}
 	
 	void createPlaylist(String name)
 	{
-		playlists[playlists.length] = new Playlist(name);
+		playlists.add(new Playlist(name));
 	}
+	
 	void deletePlaylist(Playlist playlist)
 	{
-		boolean deletedFound = false;
-		//true if one that is to be deleted has been found
-		for(int i = 0; i <this.playlists.length; i++)
-		{
-			if(playlists[i].equals(playlist))
-			{
-				playlists[i]=playlists[i+1];
-				deletedFound = true;
-				//if deleted one is found, the next array spot replaces it, and flag is triggered
-			}
-			if (deletedFound == true && i < playlists.length-1)
-			{
-				playlists[i]=playlists[i+1];
-				//shifts down all of the playlists after the deleted one as not to leave gaps
-			}
-			else if(deletedFound == true)
-			{
-				playlists[i]=null;
-				//sets final array space to null to make sure its empty
-				
-			}
-		}
+		playlists.remove(playlist);
 	}
+	
 	void uploadClip(VideoClip clip)
 	{
-		clipList[clipList.length] = clip;
+		clipList.add(clip);
 	}
 	void deleteClip(VideoClip clip)
 	{
-		
-		//didnt know if this was sipposed to remove a clip from a playlist once deleted so i assumed not.
-		boolean deletedFound = false;
-		//true if one that is to be deleted has been found
-		for(int i = 0; i <this.clipList.length; i++)
-		{
-			if(clipList[i].equals(clip))
-			{
-				clipList[i]=clipList[i+1];
-				deletedFound = true;
-				//if deleted one is found, the next array spot replaces it, and flag is triggered
-			}
-			if (deletedFound == true && i < clipList.length-1)
-			{
-				clipList[i]=clipList[i+1];
-				//shifts down all of the playlists after the deleted one as not to leave gaps
-			}
-			else if(deletedFound == true)
-			{
-				clipList[i]=null;
-				//sets final array space to null to make sure its empty
-				
-			}
-		}
+		clipList.remove(clip);
 	}
-	VideoClip[] getAllClips()
+	List<VideoClip> getAllClips()
 	{
 		return this.clipList;
 	}
-	VideoClip[] searchClips(String query)
+	List<VideoClip> searchClips(String characterQuery, String textQuery)
 	{
+		// TODO: actually query for the correct clips
 		return this.clipList;
-		//The above is definitely not permanent, just here to get the error to shut up
 	}
-	/*Playlist[] playlists;
-	VideoClip[] clipList;
-	String[] remoteSites;*/
-	void setPlaylists(Playlist[] playlists)
+	void setPlaylists(List<Playlist> playlists)
 	{
 		this.playlists=playlists;
 	}
-	Playlist[] getPlaylists()
+	List<Playlist> getPlaylists()
 	{
 		return this.playlists;
 	}
-	void setClipList(VideoClip[] clips)
+	void setClipList(List<VideoClip> clips)
 	{
 		this.clipList=clips;
 	}
-	VideoClip[] getClipList()
+	List<VideoClip> getClipList()
 	{
 		return this.clipList;
 	}
-	void setRemoteSites(String[] rs)
+	void setRemoteSites(List<String> rs)
 	{
 		this.remoteSites = rs;
 	}
-	String[] getRemoteSites()
+	List<String> getRemoteSites()
 	{
 		return this.remoteSites;
 	}
