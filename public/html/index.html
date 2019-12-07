@@ -40,6 +40,33 @@
 
     <br><br><br>
 
+	<!-- Library of playlists -->
+	<h3>Upload Video Segment</h3>
+	
+	<form name="uploadForm" method="post">
+		<input name="base64Encoding" hidden value=""/>
+		Select file to upload: <input type="file" id="uploadSegment" name="uploadSegment">
+		<input type="button" id="uploadButton" value="Upload Video Segment" disabled onClick="JavaScript:handleCreateClick(this)">
+	
+	</form>
+	
+	<script>
+	function getBase64(file){
+		var reader = new FileReader();
+		reader.readAsDataURL(file);
+		
+		reader.onload = function (){
+			document.createForm.base64Encoding.value = reader.result;
+			document.createForm.uploadButton.disabled = false;
+		};
+	}
+	
+	function handleFileSelect(evt){
+		var files = evt.target.files;
+		getBase64(files[0]);
+	}
+	</script>
+
     <!-- Library of playlists -->
     <h2>Playlists</h2>
     <p>Pre-made playlists can be viewed below, or make your own</p>
