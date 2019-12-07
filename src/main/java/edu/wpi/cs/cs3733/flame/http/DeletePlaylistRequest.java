@@ -5,6 +5,9 @@ public class DeletePlaylistRequest {
 	public String getName() { return name; }
 	public void setName(String n) { name = n; }
 	
+	public DeletePlaylistRequest() { // We actually need the null contstructor so the Jackson mapper understands the request
+	}
+	
 	public DeletePlaylistRequest(String n) {
 		name = n;
 	}

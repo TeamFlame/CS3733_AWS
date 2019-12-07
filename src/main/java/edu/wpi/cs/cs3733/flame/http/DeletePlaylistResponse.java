@@ -1,18 +1,15 @@
 package edu.wpi.cs.cs3733.flame.http;
 
 public class DeletePlaylistResponse {
-	public final String name;
 	public final int statusCode;
 	public final String error;
 	
-	public DeletePlaylistResponse(String name, int statusCode) {
-		this.name = name;
+	public DeletePlaylistResponse(int statusCode) {
 		this.statusCode = statusCode;
 		this.error = "";
 	}
 	
-	public DeletePlaylistResponse(String name, int statusCode, String error) {
-		this.name = name;
+	public DeletePlaylistResponse(int statusCode, String error) {
 		this.statusCode = statusCode;
 		this.error = error;
 	}
@@ -20,11 +17,11 @@ public class DeletePlaylistResponse {
 	public String toString() {
 		//success
 		if(statusCode == 200) {
-			return "DeleteResponse(" + name + ")";
+			return "DeleteResponse()";
 		}
 		//failure
 		else {
-			return "ErrorResult(" + name + ", statusCode=" + statusCode + ", err=" + error + ")";
+			return "ErrorResult(statusCode=" + statusCode + ", err=" + error + ")";
 		}
 	}
 }

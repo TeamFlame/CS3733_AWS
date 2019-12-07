@@ -25,14 +25,14 @@ public class DeletePlaylistHandler implements RequestHandler<DeletePlaylistReque
 		
 		try {
 			if(dao.deletePlaylist(playlist)) {
-				response = new DeletePlaylistResponse(req.name, 200);
+				response = new DeletePlaylistResponse(200);
 			}
 			else {
-				response = new DeletePlaylistResponse(req.name, 422, "Unable to delete playlist.");
+				response = new DeletePlaylistResponse(422, "Unable to delete playlist.");
 			}
 		}
 		catch (Exception e) {
-			response = new DeletePlaylistResponse(req.name, 403, "Unable to delete constant: " + req.name + "(" + e.getMessage() + ")");
+			response = new DeletePlaylistResponse(403, "Unable to delete constant: " + req.name + "(" + e.getMessage() + ")");
 		}
 		
 		return response;
