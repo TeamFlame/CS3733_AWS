@@ -5,7 +5,6 @@
  * Response array of VideoClip JSON objects
  */
 function getVideos(isAdmin) {
-  console.log('click')
   var xhr = new XMLHttpRequest();
   // TODO Define URL used here
   //xhr.open('GET', getVideos_url, true);
@@ -14,7 +13,7 @@ function getVideos(isAdmin) {
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
-      console.log('XHR:' + xhr.response);
+      console.log('Response:' + xhr.response);
       displayVideos(xhr.response, isAdmin, 'segments');
     }
   };
@@ -86,7 +85,7 @@ function searchSegment(char, text) {
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
-      console.log('XHR:' + xhr.response);
+      console.log('Response:' + xhr.response);
       displaySearch(xhr.response, char, text, searchType);
     }
   };
@@ -170,7 +169,7 @@ function searchByType(videoList, query, type) {
     if(type === 'char' && video.character == query) {
       result.push(video.bucketURI);
     }
-    if(type === 'text' && video.dialogue.contains(query)) {
+    if(type === 'text' && video.text.contains(query)) {
       result.push(video.bucketURI);
     }
   }

@@ -5,7 +5,6 @@
  * Response array of playlist JSON objects
  */
 function getPlaylists() {
-  console.log('click')
   var xhr = new XMLHttpRequest();
   // TODO Define URL used here
   //xhr.open('GET', getPlaylists_url, true);
@@ -14,7 +13,7 @@ function getPlaylists() {
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
-      console.log('XHR:' + xhr.response);
+      console.log('Response:' + xhr.response);
       displayPlaylists(xhr.response);
     }
   };
@@ -60,17 +59,19 @@ function displayPlaylists(playlistList) {
 
 /**
  * Add video segments for a given playlist to the webpage
+ * 
+ * TODO CORS error from POST request
  */
 function displayContents(playlistName) {
   var xhr = new XMLHttpRequest();
   // TODO Define URL used here
   //xhr.open('POST', getPlaylists_url, true);
-  xhr.open('get', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlistVideos', true);
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlistVideos', true);
   xhr.send(name);
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
-      console.log('XHR:' + xhr.response);
+      console.log('Response:' + xhr.response);
       displayVideos(xhr.response, false, 'playlists');
     }
   };
@@ -92,7 +93,7 @@ function createPlaylist(name) {
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
-      console.log('XHR:' + xhr.response);
+      console.log('Response:' + xhr.response);
       getPlaylists(); // TODO get specific playlist to add???
     }
   };
@@ -104,7 +105,7 @@ function createPlaylist(name) {
  * TODO
  */
 function appendSegment(video, playlistName) {
-  console.log('Appending tro playlist');
+  console.log('Appending to playlist');
   var xhr = new XMLHttpRequest();
   // TODO define URL used here
   //xhr.open('POST', getPlaylists_url, true);
@@ -116,7 +117,7 @@ function appendSegment(video, playlistName) {
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
-      console.log('XHR:' + xhr.response);
+      console.log('Response:' + xhr.response);
       getPlaylists();
     }
   };
@@ -137,7 +138,7 @@ function deletePlaylist(name) {
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
-      console.log('XHR:' + xhr.response);
+      console.log('Response:' + xhr.response);
       getPlaylists();
     }
   };
