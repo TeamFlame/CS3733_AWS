@@ -95,8 +95,6 @@ function searchSegment(char, text) {
 
 /**
  * Searches for and displaysz results of a given search query
- * 
- * TODO
  */
 function displaySearch(videoList, char, text, searchType) {
   console.log('Displaying search results');
@@ -107,28 +105,34 @@ function displaySearch(videoList, char, text, searchType) {
   var videoList = js.list;
 
   // Search using character and text fields
-  var charSearch = searchByChar(videoList, char);
-  var textSearch = searchByText(videoList, text);
+  var charSearch = searchByType(videoList, char, 'char');
+  var textSearch = searchByText(videoList, text, 'text');
+  var searchList = [];
 
   // Get overlap if both have videos (search via both vs by one)
-
-  // Conduct search and update here
-  for(let x = 0; x < videoList.length; x++) {
-
+  if(charSearch.length === 0) {
+    if(textSearch.length === 0) {return;}
+    searchList = textSearch;
   }
+  else if(textSearch.length === 0) {searchList = charSearch;}
+  else charSearch.forEach(videoURI => {
+    if(textSearch.contains(videoURI)) {
+      searchList.push(videoURI);
+    }
+  })
 
   // For each video 
   for(let i = 0; i < searchList.length; i++) {
     if(i % 5 === 0) {
       segmentSection.innerHTML += '<br><br>'
     }
-    let video = searchList[i];
-    console.log(video);
+    let videoURI = searchList[i];
+    console.log(videoURI);
     //  create and append a new video element
     var videoElement = document.createElement('video');
 
     // Set attributes
-    videoElement.setAttribute('src', video.bucketURI);
+    videoElement.setAttribute('src', videoURI);
     videoElement.setAttribute('width', '400');
     videoElement.setAttribute('height', '300');
     videoElement.setAttribute('controls', 'controls');
@@ -148,6 +152,31 @@ function displaySearch(videoList, char, text, searchType) {
     }
   };
 }
+
+/**
+ * Searches given clips for a given string defined as a character name or dialogue
+ * 
+ * type should be 'char' for character or 'text' for dialogue
+ * 
+ * TODO
+ */
+function searchByType(videoList, query, type) {
+  let result = [];
+  if(query === '') {return;}
+
+  for(let i = 0; i < videoList.length; i++) {
+    let video = videoList[i];
+    
+    if(type === 'char' && video.character == query) {
+      result.push(video.bucketURI);
+    }
+    if(type === 'text' && video.dialogue.contains(query)) {
+      result.push(video.bucketURI);
+    }
+  }
+
+  return result;
+};
 
 /**
  * Uploads a given videosegment tot he application library
