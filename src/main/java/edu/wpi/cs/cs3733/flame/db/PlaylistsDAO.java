@@ -96,8 +96,8 @@ public class PlaylistsDAO {
 			throw new Exception("Failed to create playlist: " + e.getMessage());
 		}
 	}
-<<<<<<< Updated upstream
-=======
+//<<<<<<< Updated upstream
+//=======
 	
 	public boolean deletePlaylist(Playlist playlist) throws Exception {
 		try {
@@ -112,5 +112,5 @@ public class PlaylistsDAO {
 		}
 	}
 	
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 }

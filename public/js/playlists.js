@@ -75,20 +75,26 @@ function appendtoPlaylist(name,video)
 {
 	console.log('Gathering playlists');
 	  var playlistSection = document.getElementById('playlists');
+	  // don't know if this retrieves the correct data, at the very least getts it from the html
+	  //might want to refresh or something once this is done to properly display the playlists?
 
 	  // TODO figure how to access list of playlists from response 
 	  var js = JSON.parse(playlistList);
 	  console.log(js);
 	  var playlistList = js.list;
 	  
+	  //goes through each playlist, checks each one for if the name matches, if it does, the video is added to the end of the playlist
+	  
 	  for(let i = 0; i < playlistList.length; i++) 
 	  {
 		    let playlist = playlistList[i];
-		    console.log(playlist);
+		    
 		    if (playlist.name == name)
 		    	{
-		    	   playlist.items.push(video)
+		    	   playlist.items.push(video);
+		    	   console.log('pushed ' + video + ' to' + 'playlist');
 		    	}
+		    	console.log(playlist);
 	  }
 	  //would probably upload the new playlist here, not quite sure how to do this even after looking at backend
 	  //really, really, hoping this goes here
