@@ -63,13 +63,19 @@ function displayVideos(videoList, isAdmin, section) {
       segmentSection.innerHTML += '<t>';
     }
     else {
-      // Add delete button for users
+      // Add delete and append button for users
       let deleteButton = document.createElement('input');
       deleteButton.setAttribute('type', 'button');
       deleteButton.setAttribute('value', 'Delete');
       deleteButton.setAttribute('id', video.bucketURI);
       deleteButton.setAttribute('onclick', 'deleteSegment(this.id)')
       segmentSection.appendChild(deleteButton);
+      let appendButton = document.createElement('input');
+      appendButton.setAttribute('type', 'button');
+      appendButton.setAttribute('value', 'Append');
+      appendButton.setAttribute('id', video.bucketURI);
+      appendButton.setAttribute('onclick', 'appendSegment(this.id)')
+      segmentSection.appendChild(appendButton);
       segmentSection.innerHTML += '<t>';
     }
   };
@@ -214,7 +220,7 @@ function getBase64(file) {
  * Uploads a given video segment to the application library
  */
 function uploadSegment(base64, char, text) {
-  console.log("Sending Upload request for string:", base64);
+  //console.log("Sending Upload request for string:", base64);
   var xhr = new XMLHttpRequest();
   // TODO Define URL used here
   //xhr.open('GET', getVideos_url, true);
@@ -246,15 +252,8 @@ function deleteSegment(videoURI) {
   var xhr = new XMLHttpRequest();
   // TODO Define URL used here
   //xhr.open('GET', getVideos_url, true);
-  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/videos', true);
-  xhr.send(JSON.stringify({
-    base64EncodedString: base64,
-    character: char,
-    transcript: text,
-    remoteAccess: false
-  }));
-
-  console.log(xhr);
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/deleteSegment', true);
+  xhr.send(JSON.stringify({bucketURI: videoURI}));
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {

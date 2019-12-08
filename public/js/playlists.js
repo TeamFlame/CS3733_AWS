@@ -33,6 +33,7 @@ function displayPlaylists(playlistList) {
   var js = JSON.parse(playlistList);
   console.log(js);
   var playlistList = js.list;
+  updatePlaylistSelector(playlistList);
 
   // For each playlist 
   for(let i = 0; i < playlistList.length; i++) {
@@ -107,15 +108,18 @@ function createPlaylist(name) {
  * 
  * TODO
  */
-function appendSegment(video, playlistName) {
-  console.log('Appending to playlist');
+function appendSegment(videoURI) {
+  let selector = document.getElementById('selector')
+  let index = selector.selectedIndex;
+  let workingPlaylist = selector[selectedIndex].value;
+  console.log('Appending to playlist:', workingPlaylist);
   var xhr = new XMLHttpRequest();
   // TODO define URL used here
   //xhr.open('POST', getPlaylists_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/appendSegment', true);
   xhr.send(JSON.stringify({
     video: video,
-    playlist: playlistName
+    playlist: workingPlaylist
   }));
 
   xhr.onloadend = function() {    
@@ -143,4 +147,23 @@ function deletePlaylist(name) {
       getPlaylists();
     }
   };
+};
+
+/**
+ * Updates the selector for the working playlist
+ */
+function updatePlaylistSelector(playlistList) {
+  let newSelector = document.createElement('select');
+  newSelector.setAttribute('id', 'selector');
+  let selectorDiv = document.getElementById('playlistSelector');
+
+  for(let i = 0; i < playlistList.length; i++) {
+    let playlist = playlistList[i];
+    let option = document.createElement('option');
+    option.value = playlist.name;
+    option.text = playlist.name;
+    newSelector.appendChild(option);
+  }
+  selectorDiv.innerHTML = '';
+  selectorDiv.appendChild(newSelector);
 };
