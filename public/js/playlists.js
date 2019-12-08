@@ -42,7 +42,6 @@ function displayPlaylists(playlistList) {
     // Add playlist name and buttons
     playlistSection.innerHTML += playlist.name + ': '
     let deleteButton = document.createElement('input');
-    // TODO add delete button functionality
     deleteButton.setAttribute('type', 'button');
     deleteButton.setAttribute('value', 'Delete');
     deleteButton.setAttribute('id', playlist.name);

@@ -34,7 +34,7 @@ function displayVideos(videoList, isAdmin, section) {
 
   // For each video 
   for(let i = 0; i < videoList.length; i++) {
-    if(i % 5 === 0) {
+    if(i % 4 === 0) {
       segmentSection.innerHTML += '<br><br>'
     }
     let video = videoList[i];
@@ -58,8 +58,19 @@ function displayVideos(videoList, isAdmin, section) {
       markButton.setAttribute('type', 'button');
       markButton.setAttribute('value', 'Mark for Remote Access');
       markButton.setAttribute('disabled', 'disabled');
+      markButton.style.marginTop = '50px';
       segmentSection.appendChild(markButton);
-      segmentSection.innerHTML += '<br>';
+      segmentSection.innerHTML += '<t>';
+    }
+    else {
+      // Add delete button for users
+      let deleteButton = document.createElement('input');
+      deleteButton.setAttribute('type', 'button');
+      deleteButton.setAttribute('value', 'Delete');
+      deleteButton.setAttribute('id', video.bucketURI);
+      deleteButton.setAttribute('onclick', 'deleteSegment(this.id)')
+      segmentSection.appendChild(deleteButton);
+      segmentSection.innerHTML += '<t>';
     }
   };
 };
@@ -180,9 +191,10 @@ function searchByType(videoList, query, type) {
  * Handler function for uploading a file
  */
 function handleUpload(file, char, text) {
+  if(file.name === '') {return;}
   console.log('Handling upload');
-  var base64 = getBase64(file);
-  uploadSegment(base64, char, text);
+  console.log(file);
+  uploadSegment(getBase64(file), char, text);
 };
 
 /**
@@ -190,12 +202,13 @@ function handleUpload(file, char, text) {
  */
 function getBase64(file) {
   console.log("Converting to base64");
-  if(!file) {return;}
   var reader = new FileReader();
   reader.readAsDataURL(file);
   
   reader.onload = function() {
-    return reader.result;
+    console.log('Reader result:', reader.result).then(() => {
+      return reader.result;
+    });
   };
 };
 
@@ -203,7 +216,7 @@ function getBase64(file) {
  * Uploads a given video segment tot he application library
  */
 function uploadSegment(base64, char, text) {
-  console.log("Sending Upload request");
+  console.log("Sending Upload request for string:", base64);
   var xhr = new XMLHttpRequest();
   // TODO Define URL used here
   //xhr.open('GET', getVideos_url, true);
@@ -211,14 +224,14 @@ function uploadSegment(base64, char, text) {
   xhr.send(JSON.stringify({
     base64EncodedString: base64,
     character: char,
-    text: text,
+    transcript: text,
     remoteAccess: false
   }));
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
       console.log('Response:' + xhr.response);
-      displayVideos(xhr.response, false, 'segments');
+      getVideos(false);
     }
   };
 };
@@ -231,5 +244,5 @@ function uploadSegment(base64, char, text) {
  * TODO 
  */
 function deleteSegment(video) {
-  
+
 };
