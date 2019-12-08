@@ -112,5 +112,21 @@ public class PlaylistsDAO {
 		}
 	}
 	
+	public boolean appendPlaylist(Playlist playlist, PlaylistItem playlistItem) throws Exception
+	{
+		try {
+			PreparedStatement ps = conn.prepareStatement("APPEND TO PLAYLIST THE ITEM (Playlist, PlaylistItem) values (?,?);");
+			ps.setString(1, playlist.getName());
+			ps.setObject(2, playlistItem);
+			ps.execute();
+			int numAffected = ps.executeUpdate();
+			ps.close();
+            return (numAffected == 1);
+		}
+		catch (Exception e) {
+			throw new Exception("Failed to delete playlist: " + e.getMessage());
+		}
+	}
+	
 //>>>>>>> Stashed changes
 }
