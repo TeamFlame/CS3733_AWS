@@ -1,5 +1,6 @@
 package edu.wpi.cs.cs3733.flame.db;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
@@ -66,5 +67,18 @@ private VideoClip getClip(ResultSet resultSet) throws Exception {
     Boolean remoteAccess = resultSet.getBoolean("remoteAccess");
     return new VideoClip (URI, character, text, remoteAccess);
 }
+
+	public boolean removeSegment(VideoClip clip) throws Exception {
+		try {
+			PreparedStatement ps = conn.prepareStatement("DELETE FROM clipList WHERE clipURI=?;");
+			ps.setString(1, clip.getBucketURI());
+			int numAffected = ps.executeUpdate();
+			ps.close();
+            return (numAffected == 1);
+		}
+		catch (Exception e) {
+			throw new Exception("Failed to remove local segment: " + e.getMessage());
+		}
+	}
     
 }
