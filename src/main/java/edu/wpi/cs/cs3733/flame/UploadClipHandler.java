@@ -53,10 +53,11 @@ public class UploadClipHandler implements RequestHandler<UploadClipRequest, Uplo
         UploadClipResponse response = null;
         byte[] encoded = null; 
         try {
+        	logger.log("String = " + req.base64EncodedString);
         	encoded = java.util.Base64.getDecoder().decode(req.base64EncodedString);
         }
         catch (Exception e) {
-        	logger.log(e.getStackTrace()[0].toString());
+        	logger.log("Error in decoding: " + e.getLocalizedMessage());
         }
         String bucketURI;
         try{
@@ -65,7 +66,7 @@ public class UploadClipHandler implements RequestHandler<UploadClipRequest, Uplo
         catch (Exception e) {
             e.printStackTrace();
             logger.log(e.getLocalizedMessage());
-            bucketURI = "oopsie";
+            bucketURI = "Error" + UUID.randomUUID().toString();
         }
 
         VideoClip clip = new VideoClip(bucketURI, req.character, req.transcript, req.remoteAccess);
