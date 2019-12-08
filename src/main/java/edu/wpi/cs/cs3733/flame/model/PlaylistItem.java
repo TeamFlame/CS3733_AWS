@@ -1,22 +1,14 @@
 package edu.wpi.cs.cs3733.flame.model;
 
-import java.util.UUID;
-
 public class PlaylistItem 
 {
-	int index;
-	String clipID;
-	String uuid;
+	public int index;
+	public String clipID;
 	
 	public PlaylistItem(int index, String clipID)
 	{
-		new PlaylistItem(index, clipID, UUID.randomUUID().toString());	
-	}
-	public PlaylistItem(int index, String clipID, String uuid)
-	{
 		this.index = index;
 		this.clipID = clipID;
-		this.uuid = uuid;
 	}
 	
 	@Override
@@ -24,7 +16,7 @@ public class PlaylistItem
 		boolean ret = false;
 		if(getClass() == o.getClass()) {
 			PlaylistItem other = (PlaylistItem) o;
-			if(this.uuid.equals(other.uuid)) {
+			if(this.clipID.equals(other.clipID)) {
 				ret = true;
 			}
 		}

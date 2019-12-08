@@ -50,33 +50,52 @@ public class PlaylistsDAO {
 		String name = resultSet.getString("name");
 		return new Playlist(uuid, name);
 	}
+	
+	public Playlist getPlaylist(String name) throws Exception {
+		Playlist p = null;
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM Playlists WHERE name = ?;");
+		ps.setString(1,name);
+		ResultSet resultSet = ps.executeQuery();
+		while (resultSet.next()){
+			p = getPlaylist(resultSet);
+		}
+		resultSet.close();
+		ps.close();
+		return p;
+		
+	}
 
-	public List<PlaylistItem> getAllPlaylistItems() throws Exception {
+	public List<PlaylistItem> getPlaylistItems(String name) throws Exception {
 
-		List<PlaylistItem> allItems = new ArrayList<>();
+		List<PlaylistItem> allItems = new ArrayList<PlaylistItem>();
+		Playlist p;
 		try {
-			Statement statement = conn.createStatement();
-			String query = "SELECT * FROM Playlists";
-			ResultSet resultSet = statement.executeQuery(query);
-
-			while (resultSet.next()) {
-				PlaylistItem i = getPlaylistItem(resultSet);
-				allItems.add(i);
+			p = getPlaylist(name);
+		} catch (Exception e) {
+			throw new Exception("Failed in getting playlist uuid: " + e.getLocalizedMessage());
+		}
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM PlaylistItems WHERE playlistUUID = ?;");
+			ps.setString(1, p.uuid);
+			ResultSet resultSet = ps.executeQuery();
+			while (resultSet.next()){
+				PlaylistItem item = getPlaylistItem(resultSet);
+				allItems.add(item);
 			}
 			resultSet.close();
-			statement.close();
+			ps.close();
 			return allItems;
-
-		} catch (Exception e) {
-			throw new Exception("Failed in getting clip list: " + e.getMessage());
+		}
+		catch (Exception e) {
+			throw new Exception("correct playlist uuid: " + p.uuid + " Error: " + e.getMessage());
 		}
 	}
 
 	private PlaylistItem getPlaylistItem(ResultSet resultSet) throws Exception {
-		String uuid = resultSet.getString("uuid");
 		String playlistuuid = resultSet.getString("playlistUUID");
 		String URI = resultSet.getString("clipURI");
-		int index = resultSet.getInt("index");
+		int index = resultSet.getInt("clipIndex");
 		return new PlaylistItem(index, URI);
 	}
 	
