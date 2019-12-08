@@ -62,7 +62,7 @@ function displayVideos(videoList, isAdmin, section) {
       segmentSection.appendChild(markButton);
       segmentSection.innerHTML += '<t>';
     }
-    else {
+    else if(section === 'segments'){
       // Add delete and append button for users
       let deleteButton = document.createElement('input');
       deleteButton.setAttribute('type', 'button');

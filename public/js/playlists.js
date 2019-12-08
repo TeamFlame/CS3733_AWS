@@ -51,8 +51,7 @@ function displayPlaylists(playlistList) {
     playlistSection.appendChild(deleteButton);
 
     // Add videos inside playlist
-    // TODO deal with async JS stuff here
-    //displayContents(playlist);
+    displayContents(playlist);
     
     playlistSection.innerHTML += '<br><br>'
   };
@@ -109,16 +108,15 @@ function createPlaylist(name) {
  * TODO
  */
 function appendSegment(videoURI) {
-  let selector = document.getElementById('selector')
-  let index = selector.selectedIndex;
-  let workingPlaylist = selector[selectedIndex].value;
+  let index = document.getElementById('selector').selectedIndex;
+  let workingPlaylist = selector[index].value;
   console.log('Appending to playlist:', workingPlaylist);
   var xhr = new XMLHttpRequest();
   // TODO define URL used here
   //xhr.open('POST', getPlaylists_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/appendSegment', true);
   xhr.send(JSON.stringify({
-    video: video,
+    video: videoURI,
     playlist: workingPlaylist
   }));
 
