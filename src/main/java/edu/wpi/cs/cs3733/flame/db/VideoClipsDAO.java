@@ -2,6 +2,7 @@ package edu.wpi.cs.cs3733.flame.db;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +20,26 @@ public class VideoClipsDAO {
     		conn = null;
     	}
     }
+
+    public void addClip(VideoClip clip) throws Exception {
+    	System.out.println(clip.getBucketURI());
+    	System.out.println(clip.getText());
+    	System.out.println(clip.getCharacter());
+    	System.out.println(clip.getRemoteAccess());
+        try {
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO clipList (clipURI, text, `character`, remoteAccess) values (?,?,?,?);");
+            ps.setString(1, clip.getBucketURI());
+            ps.setString(2, clip.getText());
+            ps.setString(3, clip.getCharacter());
+            ps.setBoolean(4, clip.getRemoteAccess());
+            ps.execute();
+        }
+        catch (Exception e) {
+            throw new Exception("Failed to create clip: " + e.getStackTrace()[0].toString());
+        }
+    }
 	
-public List<VideoClip> getAllClips() throws Exception {
-        
+    public List<VideoClip> getAllClips() throws Exception {    
         List<VideoClip> allClips = new ArrayList<>();
         try {
             Statement statement = conn.createStatement();
