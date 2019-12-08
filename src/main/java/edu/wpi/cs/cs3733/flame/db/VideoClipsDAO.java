@@ -22,8 +22,12 @@ public class VideoClipsDAO {
     }
 
     public void addClip(VideoClip clip) throws Exception {
+    	System.out.println(clip.getBucketURI());
+    	System.out.println(clip.getText());
+    	System.out.println(clip.getCharacter());
+    	System.out.println(clip.getRemoteAccess());
         try {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO clipList (clipURI, text, character, remoteAccess) values (?,?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO clipList (clipURI, text, `character`, remoteAccess) values (?,?,?,?);");
             ps.setString(1, clip.getBucketURI());
             ps.setString(2, clip.getText());
             ps.setString(3, clip.getCharacter());
@@ -31,7 +35,7 @@ public class VideoClipsDAO {
             ps.execute();
         }
         catch (Exception e) {
-            throw new Exception("Failed to create playlist: " + e.getMessage());
+            throw new Exception("Failed to create clip: " + e.getStackTrace()[0].toString());
         }
     }
 	

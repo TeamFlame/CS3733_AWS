@@ -22,7 +22,7 @@ public class UploadClipHandler implements RequestHandler<UploadClipRequest, Uplo
 
     // Note: this works, but it would be better to move this to environment/configuration mechanisms
 	// which you don't have to do for this project.
-	public static final String REAL_BUCKET = "Video+Clips/";
+	public static final String REAL_BUCKET = "Video Clips/";
 	public static final String TEST_BUCKET = "testconstants/";
 
     String uploadVideoClip(String filename, byte[]  contents) throws Exception {
@@ -49,14 +49,22 @@ public class UploadClipHandler implements RequestHandler<UploadClipRequest, Uplo
 
     @Override 
 	public UploadClipResponse handleRequest(UploadClipRequest req, Context context)  {
+		logger = context.getLogger();
         UploadClipResponse response = null;
-        byte[] encoded = java.util.Base64.getDecoder().decode(req.base64EncodedString);
+        byte[] encoded = null; 
+        try {
+        	encoded = java.util.Base64.getDecoder().decode(req.base64EncodedString);
+        }
+        catch (Exception e) {
+        	logger.log(e.getStackTrace()[0].toString());
+        }
         String bucketURI;
         try{
             bucketURI = uploadVideoClip(UUID.randomUUID().toString(), encoded);
         }
         catch (Exception e) {
             e.printStackTrace();
+            logger.log(e.getLocalizedMessage());
             bucketURI = "oopsie";
         }
 
@@ -67,6 +75,7 @@ public class UploadClipHandler implements RequestHandler<UploadClipRequest, Uplo
 			dao.addClip(clip);
 			response = new UploadClipResponse(200);
 		} catch (Exception e) {
+			logger.log(e.getLocalizedMessage().toString());
 			response = new UploadClipResponse(e.getMessage().toString(), 400);
 		}
         return response;
