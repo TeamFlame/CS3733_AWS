@@ -112,14 +112,16 @@ public class PlaylistsDAO {
 		}
 	}
 	
-	public boolean appendPlaylist(Playlist playlist, PlaylistItem playlistItem) throws Exception
+	public boolean appendPlaylist(Playlist playlist, PlaylistItem video) throws Exception
 	{
 		try {
 			PreparedStatement ps = conn.prepareStatement("APPEND TO PLAYLIST THE ITEM (Playlist, PlaylistItem) values (?,?);");
-			ps.setString(1, playlistItem.getBucketURI());
-			ps.setString(2, playlist.getUUID());
-			ps.setString(3, playlistItem.getClipID());
-			ps.setInt(4, playlist.items.size());
+//			ps.setString(1, playlistItem.getBucketURI());
+//			ps.setString(2, playlist.getUUID());
+//			ps.setString(3, playlistItem.getClipID());
+//			ps.setInt(4, playlist.items.size());
+			ps.setObject(1,video);
+			ps.setObject(2, playlist);
 			ps.execute();
 			int numAffected = ps.executeUpdate();
 			ps.close();

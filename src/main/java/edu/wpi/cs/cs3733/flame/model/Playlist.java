@@ -29,10 +29,18 @@ public class Playlist
 	}
 	void appendClip(VideoClip clip)//I'm not too sure about this one
 	{ 
-		PlaylistItem item = new PlaylistItem(items.size(), clip.bucketURI + clip.character +clip.text);//made this as the clipID since i don't know what 
-		//we are using and this will definitely be unique
+		PlaylistItem item = new PlaylistItem(items.size(), clip.bucketURI, clip.uuid, clip.bucketURI);//made this as the clipID since i don't know what 
 		items.add(item);
 	}
+//	int index;
+//	String clipID;
+//	String uuid;
+//	String bucketURI;
+	
+//	String bucketURI;
+//	String character;
+//	String text;
+//	Boolean remoteAccess;
 	void removeItem(PlaylistItem item)
 	{
 		boolean deletedFound = false;
