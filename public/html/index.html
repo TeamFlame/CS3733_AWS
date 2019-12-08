@@ -11,6 +11,7 @@
     
     <script type="text/javascript">
     function init() {
+      clipFile.addEventListener('change', handleNewFile, false);
       getVideos(false);
       getPlaylists();
     }
@@ -42,7 +43,8 @@
       <input type="file" name="clipFile" id="clipFile"><br>
       Character: <input name="charField"/>
       Transcript: <input name="textField"/>
-      <input type="button" id="uploadButton" value="Upload" onclick="handleUpload(clipFile.files[0], charField.value, textField.value)">
+      <input name="base64Encoding" hidden value=""/>
+      <input type="button" id="uploadButton" value="Upload" disabled onclick="uploadSegment(base64Encoding.value, charField.value, textField.value)">
     </form><br>
     <br><br><br>
 

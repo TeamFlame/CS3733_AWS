@@ -188,13 +188,11 @@ function searchByType(videoList, query, type) {
 };
 
 /**
- * Handler function for uploading a file
+ * Handler function for converting a newly selected file for upload
  */
-function handleUpload(file, char, text) {
-  if(file.name === '') {return;}
-  console.log('Handling upload');
-  console.log(file);
-  uploadSegment(getBase64(file), char, text);
+function handleNewFile(event) {
+  var files = event.target.files;
+  getBase64(files[0]);
 };
 
 /**
@@ -206,14 +204,14 @@ function getBase64(file) {
   reader.readAsDataURL(file);
   
   reader.onload = function() {
-    console.log('Reader result:', reader.result).then(() => {
-      return reader.result;
-    });
+    document.base64Encoding.value = reader.result
+    console.log(document.base64Encoding);
+    document.getElementById(uploadButton).disabled = false;
   };
 };
 
 /**
- * Uploads a given video segment tot he application library
+ * Uploads a given video segment to the application library
  */
 function uploadSegment(base64, char, text) {
   console.log("Sending Upload request for string:", base64);
