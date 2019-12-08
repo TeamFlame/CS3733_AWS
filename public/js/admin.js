@@ -3,8 +3,6 @@
  */
 function getRemotes() {
   var xhr = new XMLHttpRequest();
-  // TODO Define URL used here
-  //xhr.open('GET', getPlaylists_url, true);
   xhr.open('GET', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/remotes', true);
   xhr.send();
 
@@ -22,8 +20,6 @@ function getRemotes() {
 function addRemote(url) {
   console.log('Adding remote site:', url);
   var xhr = new XMLHttpRequest();
-  // TODO Define URL used here
-  //xhr.open('POST', getPlaylists_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/remote', true);
   xhr.send(JSON.stringify({apiURI: url}));
 
@@ -52,7 +48,6 @@ function displayRemotes(remoteList) {
   var remoteSection = document.getElementById('remotes');
   remoteSection.innerHTML = '';
 
-  // TODO confirm grabbing list correctly
   var js = JSON.parse(remoteList);
   console.log(js);
   var remoteList = js.list;

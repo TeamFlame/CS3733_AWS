@@ -1,13 +1,8 @@
 /**
  * Retrieve list of playlists in library from server
- * 
- * GET getPlaylists_url
- * Response array of playlist JSON objects
  */
 function getPlaylists() {
   var xhr = new XMLHttpRequest();
-  // TODO Define URL used here
-  //xhr.open('GET', getPlaylists_url, true);
   xhr.open('GET', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlists', true);
   xhr.send();
 
@@ -29,7 +24,6 @@ function displayPlaylists(playlistList) {
   var playlistSection = document.getElementById('playlists');
   playlistSection.innerHTML = '';
 
-  // TODO figure how to access list of playlists from response 
   var js = JSON.parse(playlistList);
   console.log(js);
   var playlistList = js.list;
@@ -46,12 +40,11 @@ function displayPlaylists(playlistList) {
     deleteButton.setAttribute('type', 'button');
     deleteButton.setAttribute('value', 'Delete');
     deleteButton.setAttribute('id', playlist.name);
-    //deleteButton.setAttribute('disabled', 'disabled');
     deleteButton.setAttribute('onclick', 'deletePlaylist(this.id)')
     playlistSection.appendChild(deleteButton);
 
     // Add videos inside playlist
-    displayContents(playlist);
+    //displayContents(playlist.name);
     
     playlistSection.innerHTML += '<br><br>'
   };
@@ -60,12 +53,10 @@ function displayPlaylists(playlistList) {
 /**
  * Add video segments for a given playlist to the webpage
  * 
- * TODO CORS error from POST request
+ * TODO 
  */
 function displayContents(playlistName) {
   var xhr = new XMLHttpRequest();
-  // TODO Define URL used here
-  //xhr.open('POST', getPlaylists_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlistVideos', true);
   xhr.send(JSON.stringify({name: name}));
 
@@ -80,24 +71,18 @@ function displayContents(playlistName) {
 
 /**
  * Creates a new empty playlist with given name
- * 
- * TODO Test with lambda
  */
 function createPlaylist(name) {
   if(name === '') {return;}
   console.log('Creating playlist:', name);
   var xhr = new XMLHttpRequest();
-  // TODO Define URL used here
-  //xhr.open('POST', getPlaylists_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlist', true);
-  //xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-  //xhr.setRequestHeader('content-type', 'application/json');
   xhr.send(JSON.stringify({name: name}));
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
       console.log('Response:' + xhr.response);
-      getPlaylists(); // TODO get specific playlist to add???
+      getPlaylists();
     }
   };
 };
@@ -111,9 +96,8 @@ function appendSegment(videoURI) {
   let index = document.getElementById('selector').selectedIndex;
   let workingPlaylist = selector[index].value;
   console.log('Appending to playlist:', workingPlaylist);
+
   var xhr = new XMLHttpRequest();
-  // TODO define URL used here
-  //xhr.open('POST', getPlaylists_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/appendSegment', true);
   xhr.send(JSON.stringify({
     video: videoURI,
@@ -134,8 +118,6 @@ function appendSegment(videoURI) {
 function deletePlaylist(name) {
   console.log('Deleting playlist:', name);
   var xhr = new XMLHttpRequest();
-  // TODO Define URL used here
-  //xhr.open('POST', getPlaylists_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/deletePlaylist', true);
   xhr.send(JSON.stringify({name: name}));
 

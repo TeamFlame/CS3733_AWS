@@ -1,13 +1,8 @@
 /**
  * Retrieve list of videos in library from server
- * 
- * GET getVideos_url
- * Response array of VideoClip JSON objects
  */
 function getVideos(isAdmin) {
   var xhr = new XMLHttpRequest();
-  // TODO Define URL used here
-  //xhr.open('GET', getVideos_url, true);
   xhr.open('GET', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/videos', true);
   xhr.send();
 
@@ -83,20 +78,15 @@ function displayVideos(videoList, isAdmin, section) {
 
 /**
  * Searches for a videoclip with given dialogue (text) and/or characters (char)
- * 
- * TODO
  */
 function searchSegment(char, text, isAdmin) {
   console.log('Searching text:', text);
   console.log('Searching character:', char);
 
   // Determine if search is valid
-  // TODO check character exists?
   if(char === '' && text === '') {return;}
 
   var xhr = new XMLHttpRequest();
-  // TODO Define URL used here
-  //xhr.open('GET', getVideos_url, true);
   xhr.open('GET', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/videos', true);
   xhr.send();
 
@@ -110,7 +100,7 @@ function searchSegment(char, text, isAdmin) {
 };
 
 /**
- * Searches for and displaysz results of a given search query
+ * Searches for and displays results of a given search query
  */
 function displaySearch(videoList, char, text, isAdmin) {
   console.log('Displaying search results');
@@ -173,8 +163,6 @@ function displaySearch(videoList, char, text, isAdmin) {
  * Searches given clips for a given string defined as a character name or dialogue
  * 
  * type should be 'char' for character or 'text' for dialogue
- * 
- * TODO
  */
 function searchByType(videoList, query, type) {
   let result = [];
@@ -220,10 +208,7 @@ function getBase64(file) {
  * Uploads a given video segment to the application library
  */
 function uploadSegment(base64, char, text) {
-  //console.log("Sending Upload request for string:", base64);
   var xhr = new XMLHttpRequest();
-  // TODO Define URL used here
-  //xhr.open('GET', getVideos_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/videos', true);
   xhr.send(JSON.stringify({
     base64EncodedString: base64,
@@ -244,14 +229,10 @@ function uploadSegment(base64, char, text) {
 
 /**
  * Delete a given video segment from the library
- * 
- * TODO 
  */
 function deleteSegment(videoURI) {
   console.log("Deleting video id:", videoURI);
   var xhr = new XMLHttpRequest();
-  // TODO Define URL used here
-  //xhr.open('GET', getVideos_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/deleteSegment', true);
   xhr.send(JSON.stringify({bucketURI: videoURI}));
 
