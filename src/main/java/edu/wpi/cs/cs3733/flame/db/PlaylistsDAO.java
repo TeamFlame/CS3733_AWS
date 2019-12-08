@@ -116,8 +116,10 @@ public class PlaylistsDAO {
 	{
 		try {
 			PreparedStatement ps = conn.prepareStatement("APPEND TO PLAYLIST THE ITEM (Playlist, PlaylistItem) values (?,?);");
-			ps.setString(1, playlist.getName());
-			ps.setObject(2, playlistItem);
+			ps.setString(1, playlistItem.getBucketURI());
+			ps.setString(2, playlist.getUUID());
+			ps.setString(3, playlistItem.getClipID());
+			ps.setInt(4, playlist.items.size());
 			ps.execute();
 			int numAffected = ps.executeUpdate();
 			ps.close();

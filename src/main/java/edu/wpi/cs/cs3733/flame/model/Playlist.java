@@ -7,7 +7,7 @@ public class Playlist
 {
 	String uuid;
 	String name;
-	List<PlaylistItem> items = new ArrayList<PlaylistItem>();
+	public List<PlaylistItem> items = new ArrayList<PlaylistItem>();
 
 
 	public Playlist(String name)
@@ -76,5 +76,11 @@ public class Playlist
 	List<PlaylistItem> getItems()
 	{
 		return this.items;
+	}
+
+	public String getUUID()
+	{
+		// TODO Auto-generated method stub
+		return this.uuid;
 	}
 }

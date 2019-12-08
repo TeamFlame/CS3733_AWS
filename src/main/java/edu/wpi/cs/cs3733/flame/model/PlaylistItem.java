@@ -7,6 +7,7 @@ public class PlaylistItem
 	int index;
 	String clipID;
 	String uuid;
+	String bucketURI;
 	
 	public PlaylistItem(int index, String clipID)
 	{
@@ -43,8 +44,16 @@ public class PlaylistItem
 	{
 		this.clipID=newID;
 	}
-	String getClipID()
+	public String getClipID()
 	{
 		return this.clipID;
+	}
+	public String getBucketURI() {
+		// TODO Auto-generated method stub
+		return this.bucketURI;
+	}
+	public void setBucketURI(String URI) {
+		// TODO Auto-generated method stub
+		this.bucketURI = URI;
 	}
 }
