@@ -192,6 +192,7 @@ function searchByType(videoList, query, type) {
  */
 function handleNewFile(event) {
   var files = event.target.files;
+  console.log(files)
   getBase64(files[0]);
 };
 
@@ -204,9 +205,8 @@ function getBase64(file) {
   reader.readAsDataURL(file);
   
   reader.onload = function() {
-    document.base64Encoding.value = reader.result
-    console.log(document.base64Encoding);
-    document.getElementById(uploadButton).disabled = false;
+    document.uploadForm.base64Encoding.value = reader.result.split(',')[1];
+    document.uploadForm.uploadButton.disabled = false;
   };
 };
 
@@ -226,6 +226,8 @@ function uploadSegment(base64, char, text) {
     remoteAccess: false
   }));
 
+  console.log(xhr);
+
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
       console.log('Response:' + xhr.response);
@@ -234,13 +236,30 @@ function uploadSegment(base64, char, text) {
   };
 };
 
-
-
 /**
  * Delete a given video segment from the library
  * 
  * TODO 
  */
-function deleteSegment(video) {
+function deleteSegment(videoURI) {
+  console.log("Deleting video id:", videoURI);
+  var xhr = new XMLHttpRequest();
+  // TODO Define URL used here
+  //xhr.open('GET', getVideos_url, true);
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/videos', true);
+  xhr.send(JSON.stringify({
+    base64EncodedString: base64,
+    character: char,
+    transcript: text,
+    remoteAccess: false
+  }));
 
+  console.log(xhr);
+
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('Response:' + xhr.response);
+      getVideos(false);
+    }
+  };
 };

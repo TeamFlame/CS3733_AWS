@@ -113,10 +113,10 @@ function appendSegment(video, playlistName) {
   // TODO define URL used here
   //xhr.open('POST', getPlaylists_url, true);
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/appendSegment', true);
-  xhr.send({
+  xhr.send(JSON.stringify({
     video: video,
     playlist: playlistName
-  });
+  }));
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
