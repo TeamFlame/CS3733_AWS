@@ -29,7 +29,7 @@ public class Playlist
 	}
 	void appendClip(VideoClip clip)//I'm not too sure about this one
 	{ 
-		PlaylistItem item = new PlaylistItem(items.size(), clip.bucketURI, clip.uuid, clip.bucketURI);//made this as the clipID since i don't know what 
+		PlaylistItem item = new PlaylistItem(items.size(), clip.bucketURI, clip.bucketURI);//made this as the clipID since i don't know what 
 		items.add(item);
 	}
 //	int index;
