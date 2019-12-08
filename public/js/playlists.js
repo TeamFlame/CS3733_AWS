@@ -1,20 +1,14 @@
 /**
  * Retrieve list of playlists in library from server
- * 
- * GET getPlaylists_url
- * Response array of playlist JSON objects
  */
 function getPlaylists() {
-  console.log('click')
   var xhr = new XMLHttpRequest();
-  // TODO Define URL used here
-  //xhr.open('GET', getPlaylists_url, true);
   xhr.open('GET', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlists', true);
   xhr.send();
 
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
-      console.log('XHR:' + xhr.response);
+      console.log('Response:' + xhr.response);
       displayPlaylists(xhr.response);
     }
   };
@@ -28,11 +22,12 @@ function getPlaylists() {
 function displayPlaylists(playlistList) {
   console.log('Displaying playlists');
   var playlistSection = document.getElementById('playlists');
+  playlistSection.innerHTML = '';
 
-  // TODO figure how to access list of playlists from response 
   var js = JSON.parse(playlistList);
   console.log(js);
   var playlistList = js.list;
+  updatePlaylistSelector(playlistList);
 
   // For each playlist 
   for(let i = 0; i < playlistList.length; i++) {
@@ -42,27 +37,113 @@ function displayPlaylists(playlistList) {
     // Add playlist name and buttons
     playlistSection.innerHTML += playlist.name + ': '
     let deleteButton = document.createElement('input');
-    // TODO add delete button functionality
     deleteButton.setAttribute('type', 'button');
     deleteButton.setAttribute('value', 'Delete');
     deleteButton.setAttribute('id', playlist.name);
-    deleteButton.setAttribute('disabled', 'disabled');
+    deleteButton.setAttribute('onclick', 'deletePlaylist(this.id)')
     playlistSection.appendChild(deleteButton);
-    playlistSection.innerHTML += '<br><br>'
 
     // Add videos inside playlist
-    // TODO write this
+    //displayContents(playlist.name);
+    
+    playlistSection.innerHTML += '<br><br>'
   };
 };
 
-function createPlaylist() {
+/**
+ * Add video segments for a given playlist to the webpage
+ * 
+ * TODO 
+ */
+function displayContents(playlistName) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlistVideos', true);
+  xhr.send(JSON.stringify({name: name}));
 
-};
-
-function deletePlaylist() {
-
-};
-
-function searchSegment() {
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('Response:' + xhr.response);
+      displayVideos(xhr.response, false, 'playlists');
+    }
+  };
   
+};
+
+/**
+ * Creates a new empty playlist with given name
+ */
+function createPlaylist(name) {
+  if(name === '') {return;}
+  console.log('Creating playlist:', name);
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlist', true);
+  xhr.send(JSON.stringify({name: name}));
+
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('Response:' + xhr.response);
+      getPlaylists();
+    }
+  };
+};
+
+/**
+ * Appends a given video to the end of a playlist
+ * 
+ * TODO
+ */
+function appendSegment(videoURI) {
+  let index = document.getElementById('selector').selectedIndex;
+  let workingPlaylist = selector[index].value;
+  console.log('Appending to playlist:', workingPlaylist);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/appendSegment', true);
+  xhr.send(JSON.stringify({
+    video: videoURI,
+    playlist: workingPlaylist
+  }));
+
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('Response:' + xhr.response);
+      getPlaylists();
+    }
+  };
+};
+
+/**
+ * Deletes the playlist of the given name from the library
+ */
+function deletePlaylist(name) {
+  console.log('Deleting playlist:', name);
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/deletePlaylist', true);
+  xhr.send(JSON.stringify({name: name}));
+
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('Response:' + xhr.response);
+      getPlaylists();
+    }
+  };
+};
+
+/**
+ * Updates the selector for the working playlist
+ */
+function updatePlaylistSelector(playlistList) {
+  let newSelector = document.createElement('select');
+  newSelector.setAttribute('id', 'selector');
+  let selectorDiv = document.getElementById('playlistSelector');
+
+  for(let i = 0; i < playlistList.length; i++) {
+    let playlist = playlistList[i];
+    let option = document.createElement('option');
+    option.value = playlist.name;
+    option.text = playlist.name;
+    newSelector.appendChild(option);
+  }
+  selectorDiv.innerHTML = '';
+  selectorDiv.appendChild(newSelector);
 };
