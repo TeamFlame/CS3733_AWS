@@ -44,7 +44,7 @@ function displayPlaylists(playlistList) {
     playlistSection.appendChild(deleteButton);
 
     // Add videos inside playlist
-    //displayContents(playlist.name);
+    displayContents(playlist.name);
     
     playlistSection.innerHTML += '<br><br>'
   };

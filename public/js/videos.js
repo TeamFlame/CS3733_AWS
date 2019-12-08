@@ -38,7 +38,11 @@ function displayVideos(videoList, isAdmin, section) {
     var videoElement = document.createElement('video');
 
     // Set attributes
-    videoElement.setAttribute('src', video.bucketURI);
+    if(section === 'segments') {
+      videoElement.setAttribute('src', video.bucketURI);
+    }
+    else videoElement.setAttribute('src', video.clipID);
+
     videoElement.setAttribute('width', '400');
     videoElement.setAttribute('height', '300');
     videoElement.setAttribute('controls', 'controls');
