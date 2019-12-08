@@ -52,7 +52,7 @@ private VideoClip getClip(ResultSet resultSet) throws Exception {
 
 	public boolean removeSegment(VideoClip clip) throws Exception {
 		try {
-			PreparedStatement ps = conn.prepareStatement("DELETE FROM clipList WHERE bucketURI=?;");
+			PreparedStatement ps = conn.prepareStatement("DELETE FROM clipList WHERE clipURI=?;");
 			ps.setString(1, clip.getBucketURI());
 			int numAffected = ps.executeUpdate();
 			ps.close();
