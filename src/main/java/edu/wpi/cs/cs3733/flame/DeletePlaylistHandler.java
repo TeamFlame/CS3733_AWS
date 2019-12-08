@@ -32,7 +32,7 @@ public class DeletePlaylistHandler implements RequestHandler<DeletePlaylistReque
 			}
 		}
 		catch (Exception e) {
-			response = new DeletePlaylistResponse(403, "Unable to delete constant: " + req.name + "(" + e.getMessage() + ")");
+			response = new DeletePlaylistResponse(403, "Unable to delete playlist: " + req.name + "(" + e.getMessage() + ")");
 		}
 		
 		return response;
