@@ -42,7 +42,7 @@
       <input type="file" name="clipFile" id="clipFile"><br>
       Character: <input name="charField"/>
       Transcript: <input name="textField"/>
-      <input type="button" id="uploadButton" value="Upload" onclick="getBase64(clipFile.value)">
+      <input type="button" id="uploadButton" value="Upload" onclick="handleUpload(clipFile.files[0], charField.value, textField.value)">
     </form><br>
     <br><br><br>
 

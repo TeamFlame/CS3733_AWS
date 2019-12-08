@@ -177,25 +177,33 @@ function searchByType(videoList, query, type) {
 };
 
 /**
+ * Handler function for uploading a file
+ */
+function handleUpload(file, char, text) {
+  console.log('Handling upload');
+  var base64 = getBase64(file);
+  uploadSegment(base64, char, text);
+};
+
+/**
  * Converts video file to base64 string
  */
 function getBase64(file) {
+  console.log("Converting to base64");
   if(!file) {return;}
   var reader = new FileReader();
   reader.readAsDataURL(file);
   
   reader.onload = function() {
-    uploadSegment(reader.result);
+    return reader.result;
   };
 };
 
 /**
  * Uploads a given video segment tot he application library
  */
-function uploadSegment(base64) {
-  let char = document.charField.value;
-  let text = document.textField.value;
-
+function uploadSegment(base64, char, text) {
+  console.log("Sending Upload request");
   var xhr = new XMLHttpRequest();
   // TODO Define URL used here
   //xhr.open('GET', getVideos_url, true);
@@ -218,10 +226,10 @@ function uploadSegment(base64) {
 
 
 /**
- * Delete a given vcideo segment from the library
+ * Delete a given video segment from the library
  * 
  * TODO 
  */
 function deleteSegment(video) {
-
+  
 };
