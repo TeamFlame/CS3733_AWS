@@ -17,8 +17,8 @@ public class AppendPlaylistHandler implements RequestHandler<AppendPlaylistReque
 		if (logger != null) { logger.log("in appendPlaylist"); }
 		PlaylistsDAO dao = new PlaylistsDAO();
 		
-		Playlist playlist = workingPlaylist.items.add(videoURI);
-		return dao.createPlaylist(playlist);
+		
+		return dao.appendPlaylist(videoURI,workingPlaylist);
 	}
 	
 	@Override
