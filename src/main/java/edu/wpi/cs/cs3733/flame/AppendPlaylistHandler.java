@@ -9,7 +9,7 @@ import edu.wpi.cs.cs3733.flame.http.*;
 import edu.wpi.cs.cs3733.flame.model.Playlist;
 
 
-public class AppendPlaylistHandler implements RequestHandler<AppendPlaylistRequest, AppendPlaylistRequest> 
+public class AppendPlaylistHandler implements RequestHandler<AppendPlaylistRequest, AppendPlaylistResponse> 
 {
 	LambdaLogger logger;
 	
