@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Team Flame CS3733 Admin Page</title>
     <script type='text/javascript' src='../js/videos.js'></script>
-    <script type='text/javascript' src='../js/playlists.js'></script>
+    <script type='text/javascript' src='../js/admin.js'></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
@@ -13,6 +13,7 @@
     <script type="text/javascript">
     function init() {
       getVideos(true);
+      getRemotes();
     }
     </script>
   </head>
@@ -20,7 +21,7 @@
     <h1>Welcome, Administrator</h1>
     <nav class="navbar navbar-inverse navbar-static-top">
       <div>
-        <a class="navbar-brand" href="/">Toggle Admin</a>
+        <a class="navbar-brand" href="./index.html">Toggle Admin</a>
       </div>
     </nav>
 
@@ -44,7 +45,7 @@
     <p>Registered remote sites can be found below, or changed via the form</p>
     <form name="addRemoteForm" method="post">
         URL: <input name="remoteURL"/>
-        <input type="button" id="remoteButton" value="Add" disabled>
+        <input type="button" id="remoteButton" value="Add" onclick="addRemote(addRemoteForm.remoteURL.value)">
     </form><br>
     <div id=remotes>
       <!-- Dynamically filled -->

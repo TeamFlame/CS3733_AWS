@@ -27,5 +27,14 @@ public class ListAllVideosTest extends LambdaTest {
         
         Assert.assertEquals(200, resp.statusCode);
     }
+    
+    @Test
+    public void testAllClipsResponse() {
+    	AllClipsResponse res = new AllClipsResponse(400, "error");
+    	Assert.assertEquals(res.toString(), "VideoClip(0)");
+    	
+    	AllClipsResponse res2 = new AllClipsResponse(null, 200);
+    	Assert.assertEquals(res2.toString(), "EmptyClipList");
+    }
 
 }

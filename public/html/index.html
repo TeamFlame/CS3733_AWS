@@ -9,9 +9,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
-
     <script type="text/javascript">
     function init() {
+      clipFile.addEventListener('change', handleNewFile, false);
       getVideos(false);
       getPlaylists();
     }
@@ -21,7 +21,7 @@
     <h1>Welcome, Participant</h1>
     <nav class="navbar navbar-inverse navbar-static-top">
       <div>
-        <a class="navbar-brand" href="/admin">Toggle Admin</a>
+        <a class="navbar-brand" href="./admin.html">Toggle Admin</a>
       </div>
     </nav>
 
@@ -29,23 +29,32 @@
     <h2>Library</h2>
     <p>Available video segments can be viewed below</p>
     <p>Or search using the form</p>
-    <form name="searchForm" method="post">
+    <form name="searchForm">
       Character Name: <input name="characterName"/>
       Dialogue: <input name="dialogue"/>
-      <input type="button" id="searchButton" value="Search" disabled>
+      <input type="button" id="searchButton" value="Search" onclick="searchSegment(characterName.value, dialogue.value, false)"/>
+      <input type="button" id="resetButton" value="Reset" onclick="getVideos(false)"/>
     </form><br>
     <div id="segments">
       <!-- Dynamically filled -->
-    </div>
-
+    </div><br><br>
+    <form name="uploadForm">
+      Upload a new clip: 
+      <input type="file" name="clipFile" id="clipFile"><br>
+      Character: <input name="charField"/>
+      Transcript: <input name="textField"/>
+      <input name="base64Encoding" hidden value=""/>
+      <input type="button" name="uploadButton" value="Upload" disabled onclick="uploadSegment(base64Encoding.value, charField.value, textField.value)"/>
+    </form><br>
     <br><br><br>
-
     <!-- Library of playlists -->
     <h2>Playlists</h2>
-    <p>Pre-made playlists can be viewed below, or make your own</p>
-    <form name="createPlaylistForm" method="post">
+    <p>Playlists can be viewed below, or make your own</p>
+
+    Working Playlist: <div id="playlistSelector"></div><br>
+    <form name="createPlaylistForm">
         Name: <input name="playlistName"/>
-        <input type="button" id="createButton" value="Create" disabled>
+        <input type="button" id="createButton" value="Create" onclick="createPlaylist(createPlaylistForm.playlistName.value)">
     </form><br>
     <div id="playlists">
       <!-- Dynamically filled -->

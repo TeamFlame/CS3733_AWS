@@ -7,7 +7,7 @@ public class Playlist
 {
 	String uuid;
 	String name;
-	List<PlaylistItem> items = new ArrayList<PlaylistItem>();
+	public List<PlaylistItem> items = new ArrayList<PlaylistItem>();
 
 
 	public Playlist(String name)
