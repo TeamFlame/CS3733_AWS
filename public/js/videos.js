@@ -174,7 +174,7 @@ function searchByType(videoList, query, type) {
     for(let i = 0; i < videoList.length; i++) {
       let video = videoList[i];
 
-      if(type === 'char' && video.character == query) {
+      if(type === 'char' && video.character.includes(query)) {
         result.push(video.bucketURI);
       }
       if(type === 'text' && video.text.includes(query)) {
