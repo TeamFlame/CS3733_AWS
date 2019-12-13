@@ -1,33 +1,37 @@
 package edu.wpi.cs.cs3733.flame.http;
 
+import java.util.List;
+import java.util.ArrayList;
+
+import edu.wpi.cs.cs3733.flame.db.PlaylistsDAO;
 import edu.wpi.cs.cs3733.flame.model.Playlist;
 
 public class AppendPlaylistRequest 
 {
-public String videoURI;
-public Playlist workingPlaylist;
+public String video;
+public String playlist;
 
 	public String getVideoURI()
 	{
-		return videoURI;
+		return video;
 	}
-	public Playlist getWorkingPlaylist()
+	public String getWorkingPlaylist()
 	{
-		return workingPlaylist;
+		return playlist;
 	}
 	public AppendPlaylistRequest()
 	{
 		
 	}
-	public AppendPlaylistRequest(String videoURI, Playlist workingPlaylist)
+	public AppendPlaylistRequest(String video, String playlist)
 	{
-		this.videoURI=videoURI;
-		this.workingPlaylist=workingPlaylist;
+		this.video=video;
+		this.playlist=playlist;
 	}
 	
 	public String toString()
 	{
-		return "AppendPlaylist(" + videoURI + workingPlaylist.getName() + ")";
+		return "AppendPlaylist(" + video + ", " + playlist + ")";
 	}
 
 }

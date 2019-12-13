@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Playlist 
 {
-	String uuid;
+	public String uuid;
 	String name;
 	public List<PlaylistItem> items = new ArrayList<PlaylistItem>();
 

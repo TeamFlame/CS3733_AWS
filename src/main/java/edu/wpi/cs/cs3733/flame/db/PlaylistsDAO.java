@@ -44,6 +44,26 @@ public class PlaylistsDAO {
 			throw new Exception("Failed in getting clip list: " + e.getMessage());
 		}
 	}
+	
+	public Playlist getPlaylist(String name) throws Exception {
+
+		Playlist playlist = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM Playlists WHERE name=? LIMIT 1;");
+			ps.setObject(1, name);
+			ResultSet resultSet = ps.executeQuery();
+
+			while (resultSet.next()) {
+				playlist = getPlaylist(resultSet);
+			}
+			resultSet.close();
+			ps.close();
+			return playlist;
+
+		} catch (Exception e) {
+			throw new Exception("Failed in getting playlist: " + e.getMessage());
+		}
+	}
 
 	private Playlist getPlaylist(ResultSet resultSet) throws Exception {
 		String uuid = resultSet.getString("uuid");
@@ -109,12 +129,33 @@ public class PlaylistsDAO {
 			throw new Exception("Failed to delete playlist: " + e.getMessage());
 		}
 	}
-
-	public boolean appendPlaylist(String videoURI, Playlist workingPlaylist)throws Exception {
+	
+	public int getPlaylistMaxIdx(Playlist p) throws Exception{
 		try {
-			PreparedStatement ps = conn.prepareStatement("APPEND TO items (videoURI, workingPlaylist) values (?,?);");
-			ps.setString(1, videoURI);
-			ps.setObject(2, workingPlaylist);
+			int maxId = 0;
+			PreparedStatement ps = conn.prepareStatement("SELECT MAX(clipIndex) AS maxId FROM PlaylistItems WHERE playlistUUID=?;");
+			ps.setObject(1, p.uuid);
+			ResultSet resultSet = ps.executeQuery();
+
+			while (resultSet.next()) {
+				maxId = resultSet.getInt("maxId");
+			}
+			resultSet.close();
+			ps.close();
+			return maxId;
+
+		} catch (Exception e) {
+			throw new Exception("Failed in getting maxId: " + e.getMessage() + " Playlist uuid: " + p.uuid);
+		}
+	}
+
+	public boolean insertIntoPlaylist(String videoURI, Playlist workingPlaylist, int index)throws Exception {
+		try {
+			
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO PlaylistItems (playlistUUID, clipURI, clipIndex) values (?,?,?);");
+			ps.setObject(1, workingPlaylist.uuid);
+			ps.setObject(2, videoURI);
+			ps.setObject(3, index);
 			ps.execute();
             return true;
 		}
