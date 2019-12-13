@@ -80,5 +80,19 @@ private VideoClip getClip(ResultSet resultSet) throws Exception {
 			throw new Exception("Failed to remove local segment: " + e.getMessage());
 		}
 	}
+	
+	public boolean markRemoteSegment(String clipURI) throws Exception{
+		try {
+			PreparedStatement ps = conn.prepareStatement("UPDATE clipList SET remoteAccess=1 WHERE clipURI=?");
+			ps.setString(1, clipURI);
+			int numAffected = ps.executeUpdate();
+			ps.close();
+			return (numAffected == 1);
+		}
+		catch (Exception e) {
+			throw new Exception("Failed to mark local segment: " + e.getMessage());
+		}
+
+	}
     
 }
