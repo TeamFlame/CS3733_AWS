@@ -45,8 +45,8 @@ function displayVideos(videoList, isAdmin, section) {
     }
     else videoElement.setAttribute('src', video.clipID);
 
-    videoElement.setAttribute('width', '400');
-    videoElement.setAttribute('height', '300');
+    videoElement.setAttribute('width', '320');
+    videoElement.setAttribute('height', '240');
     videoElement.setAttribute('controls', 'controls');
 
     // Append to container
@@ -94,6 +94,11 @@ function displayVideos(videoList, isAdmin, section) {
       container.appendChild(info);
     }
     else if(section === 'playlists'){
+      // Tag video with id and callback for playing
+      videoElement.setAttribute('id', 'video' + i);
+      playNextFunction = playFunction('video' + (i + 1));
+      videoElement.addEventListener('ended', playNextFunction);
+
       // Add delete and append button for users
       let deleteButton = document.createElement('input');
       deleteButton.setAttribute('type', 'button');
@@ -171,8 +176,8 @@ function displaySearch(videoList, char, text, isAdmin) {
 
     // Set attributes
     videoElement.setAttribute('src', videoURI);
-    videoElement.setAttribute('width', '400');
-    videoElement.setAttribute('height', '300');
+    videoElement.setAttribute('width', '320');
+    videoElement.setAttribute('height', '240');
     videoElement.setAttribute('controls', 'controls');
 
     // Append to doc
@@ -273,5 +278,15 @@ function deleteSegment(videoURI) {
       console.log('Response:' + xhr.response);
       getVideos(false);
     }
+  };
+};
+
+/**
+ * Returns a function for use in playing the contents of a playlist
+ */
+function playFunction(id) {
+  return function(e) {
+    console.log('Playing:', id)
+    document.getElementById(id).play();
   };
 };

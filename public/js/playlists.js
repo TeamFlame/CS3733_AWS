@@ -187,3 +187,10 @@ function updatePlaylistSelector(playlistList) {
   if(document.getElementById('playlists'))
   displayContents(newSelector[newSelector.selectedIndex].value);
 };
+
+/**
+ * Plays the given playlist's videos in order
+ */
+function playPlaylist(playlistName) {
+  
+};
