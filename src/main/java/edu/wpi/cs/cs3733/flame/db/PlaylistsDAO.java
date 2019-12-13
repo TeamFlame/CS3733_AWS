@@ -112,9 +112,9 @@ public class PlaylistsDAO {
 
 	public boolean appendPlaylist(String videoURI, Playlist workingPlaylist)throws Exception {
 		try {
-			PreparedStatement ps = conn.prepareStatement("APPEND TO items (videoURI, workingPlaylist) values (?,?);");
-			ps.setString(1, videoURI);
-			ps.setObject(2, workingPlaylist);
+			PreparedStatement ps = conn.prepareStatement("APPEND TO items (playlistUUID, clipURI, clipIndex) values (?,?,?);");
+			ps.setObject(1, workingPlaylist.uuid);
+			ps.setObject(2, videoURI);
 			ps.execute();
             return true;
 		}

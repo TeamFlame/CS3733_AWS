@@ -5,13 +5,13 @@ import edu.wpi.cs.cs3733.flame.model.Playlist;
 public class AppendPlaylistRequest 
 {
 public String videoURI;
-public Playlist workingPlaylist;
+public String workingPlaylist;
 
 	public String getVideoURI()
 	{
 		return videoURI;
 	}
-	public Playlist getWorkingPlaylist()
+	public String getWorkingPlaylist()
 	{
 		return workingPlaylist;
 	}
@@ -19,7 +19,7 @@ public Playlist workingPlaylist;
 	{
 		
 	}
-	public AppendPlaylistRequest(String videoURI, Playlist workingPlaylist)
+	public AppendPlaylistRequest(String videoURI, String workingPlaylist)
 	{
 		this.videoURI=videoURI;
 		this.workingPlaylist=workingPlaylist;
@@ -27,7 +27,13 @@ public Playlist workingPlaylist;
 	
 	public String toString()
 	{
-		return "AppendPlaylist(" + videoURI + workingPlaylist.getName() + ")";
+		return "AppendPlaylist(" + videoURI + workingPlaylist + ")";
+	}
+	
+	public Playlist getPlaylist() {
+		Playlist play = new Playlist(workingPlaylist);
+		
+		return play;
 	}
 
 }

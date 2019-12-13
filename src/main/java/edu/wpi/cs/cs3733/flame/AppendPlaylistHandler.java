@@ -17,8 +17,7 @@ public class AppendPlaylistHandler implements RequestHandler<AppendPlaylistReque
 		if (logger != null) { logger.log("in appendPlaylist"); }
 		PlaylistsDAO dao = new PlaylistsDAO();
 		
-		
-		return dao.appendPlaylist(videoURI,workingPlaylist);
+		return dao.appendPlaylist(videoURI, workingPlaylist);
 	}
 	
 	@Override
@@ -29,7 +28,7 @@ public class AppendPlaylistHandler implements RequestHandler<AppendPlaylistReque
 		AppendPlaylistResponse response;
 		
 		try {
-			if(appendPlaylist(req.videoURI, req.workingPlaylist)) {
+			if(appendPlaylist(req.videoURI, req.getPlaylist())) {
 				response = new AppendPlaylistResponse();
 			}
 			else {
@@ -37,7 +36,7 @@ public class AppendPlaylistHandler implements RequestHandler<AppendPlaylistReque
 			}
 		}
 		catch (Exception e) {
-			response = new AppendPlaylistResponse("Unable to append video" + req.videoURI + " to playlist" + req.workingPlaylist.getName() + ".", 400);
+			response = new AppendPlaylistResponse("Unable to append video" + req.videoURI + " to playlist" + req.workingPlaylist + ".", 400);
 		}
 		
 		return response;
