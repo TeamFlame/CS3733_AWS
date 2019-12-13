@@ -29,12 +29,18 @@ function displayVideos(videoList, isAdmin, section) {
 
   // For each video 
   for(let i = 0; i < videoList.length; i++) {
-    if(i % 4 === 0) {
-      segmentSection.innerHTML += '<br><br>'
-    }
+    // if(i % 2 === 0) {
+    //   segmentSection.innerHTML += '<br><br>'
+    // }
     let video = videoList[i];
     console.log(video);
-    //  create and append a new video element
+
+    // Create new container for video and elements
+    var container = document.createElement('section');
+    container.setAttribute('class', 'd-inline-flex container');
+    //container.setAttribute('style', 'margin-left: 20px')
+
+    // Create and append a new video element
     var videoElement = document.createElement('video');
 
     // Set attributes
@@ -47,8 +53,8 @@ function displayVideos(videoList, isAdmin, section) {
     videoElement.setAttribute('height', '300');
     videoElement.setAttribute('controls', 'controls');
 
-    // Append to doc
-    segmentSection.appendChild(videoElement);
+    // Append to container
+    container.appendChild(videoElement);
 
     
     // Add marking button for admins
@@ -58,8 +64,7 @@ function displayVideos(videoList, isAdmin, section) {
       markButton.setAttribute('value', 'Mark for Remote Access');
       markButton.setAttribute('disabled', 'disabled');
       markButton.style.marginTop = '50px';
-      segmentSection.appendChild(markButton);
-      segmentSection.innerHTML += '<t>';
+      container.appendChild(markButton);
     }
     else if(section === 'segments'){
       // Add delete and append button for users
@@ -68,15 +73,23 @@ function displayVideos(videoList, isAdmin, section) {
       deleteButton.setAttribute('value', 'Delete');
       deleteButton.setAttribute('id', video.bucketURI);
       deleteButton.setAttribute('onclick', 'deleteSegment(this.id)')
-      segmentSection.appendChild(deleteButton);
+      container.appendChild(deleteButton);
       let appendButton = document.createElement('input');
       appendButton.setAttribute('type', 'button');
       appendButton.setAttribute('value', 'Append');
       appendButton.setAttribute('id', video.bucketURI);
       appendButton.setAttribute('onclick', 'appendSegment(this.id)')
-      segmentSection.appendChild(appendButton);
-      segmentSection.innerHTML += '<t>';
+      container.appendChild(appendButton);
+      
+      // Add character and text fields
+      let info = document.createElement('p');
+      info.innerHTML += 'Character: ' + video.character + '<br><br>';
+      info.innerHTML += 'Transcript: ' + video.text;
+      container.appendChild(info);
     }
+
+    // Append container to doc
+    segmentSection.appendChild(container);
   };
 };
 
@@ -133,7 +146,7 @@ function displaySearch(videoList, char, text, isAdmin) {
 
   // For each video 
   for(let i = 0; i < searchList.length; i++) {
-    if(i % 5 === 0) {
+    if(i % 2 === 0) {
       segmentSection.innerHTML += '<br><br>'
     }
     let videoURI = searchList[i];

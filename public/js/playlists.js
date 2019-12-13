@@ -53,6 +53,7 @@ function displayPlaylists(playlistList) {
  * TODO 
  */
 function displayContents(name) {
+  console.log('Clearing old contents');
   // Clear old contents
   let contentSection = document.getElementById('playlists');
   let i = 0;
@@ -70,6 +71,7 @@ function displayContents(name) {
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
       console.log('Response:' + xhr.response);
+      console.log('Displaying Working Playlist');
       displayVideos(xhr.response, false, 'playlists');
     }
   };
@@ -155,4 +157,15 @@ function updatePlaylistSelector(playlistList) {
   }
   selectorDiv.innerHTML = '';
   selectorDiv.appendChild(newSelector);
+};
+
+/**
+ * Wrapper function used to display the contents of a playlist on window load
+ * The function must wait for the selector to be created before it can know which playlist to show
+ */
+function initDisplayContents() {
+  let selector = document.getElementById("selector");
+  
+
+  displayContents(document.getElementById("selector")[document.getElementById("selector").selectedIndex].value);
 };
