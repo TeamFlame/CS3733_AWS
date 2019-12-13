@@ -8,8 +8,8 @@ public class MarkLocalSegmentRequest {
 	public MarkLocalSegmentRequest() { // We actually need the null contstructor so the Jackson mapper understands the request
 	}
 	
-	public MarkLocalSegmentRequest(String b) {
-		bucketURI = b;
+	public MarkLocalSegmentRequest(String bucketURI) {
+		this.bucketURI = bucketURI;
 	}
 	
 	public String toString() {
