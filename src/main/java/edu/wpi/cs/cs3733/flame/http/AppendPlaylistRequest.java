@@ -45,8 +45,14 @@ public String workingPlaylist;
 			}
 		}
 		*/
+		Playlist play = null;
 		PlaylistsDAO dao = new PlaylistsDAO();
-		Playlist play = dao.getPlaylist(workingPlaylist);
+		try {
+			 play = dao.getPlaylist(workingPlaylist);
+		}
+		catch (Exception e){
+			
+		}
 		
 		return play;
 	}
