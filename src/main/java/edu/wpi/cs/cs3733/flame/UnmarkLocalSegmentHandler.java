@@ -16,7 +16,6 @@ public class UnmarkLocalSegmentHandler implements RequestHandler<UnmarkLocalSegm
 		logger.log(req.toString());
 		
 		UnmarkLocalSegmentResponse response = null;
-		logger.log(req.toString());
 		
 		VideoClipsDAO dao = new VideoClipsDAO();
 		try {
