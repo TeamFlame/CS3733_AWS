@@ -53,16 +53,9 @@ function displayPlaylists(playlistList) {
  * TODO 
  */
 function displayContents(name) {
-  console.log('Clearing old contents');
   // Clear old contents
   let contentSection = document.getElementById('playlists');
-  let i = 0;
-
-  while(contentSection.childNodes[i]) {
-    let element = contentSection.childNodes[i];
-    if(element.nodeName === 'VIDEO') {element.remove()}
-    else i++;
-  }
+  contentSection.innerHTML = '';
 
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlistVideos', true);
@@ -192,5 +185,5 @@ function updatePlaylistSelector(playlistList) {
  * Plays the given playlist's videos in order
  */
 function playPlaylist(playlistName) {
-  
+
 };
