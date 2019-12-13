@@ -8,53 +8,30 @@ import edu.wpi.cs.cs3733.flame.model.Playlist;
 
 public class AppendPlaylistRequest 
 {
-public String videoURI;
-public String workingPlaylist;
+public String video;
+public String playlist;
 
 	public String getVideoURI()
 	{
-		return videoURI;
+		return video;
 	}
 	public String getWorkingPlaylist()
 	{
-		return workingPlaylist;
+		return playlist;
 	}
 	public AppendPlaylistRequest()
 	{
 		
 	}
-	public AppendPlaylistRequest(String videoURI, String workingPlaylist)
+	public AppendPlaylistRequest(String video, String playlist)
 	{
-		this.videoURI=videoURI;
-		this.workingPlaylist=workingPlaylist;
+		this.video=video;
+		this.playlist=playlist;
 	}
 	
 	public String toString()
 	{
-		return "AppendPlaylist(" + videoURI + workingPlaylist + ")";
-	}
-	
-	public Playlist getPlaylist() {
-		/*
-		Playlist play = new Playlist(workingPlaylist);
-		
-		List<Playlist>playlists = dao.getAllPlaylists();
-		for(Playlist p: playlists) {
-			if(p.getName().equals(workingPlaylist)) {
-				play = p;
-			}
-		}
-		*/
-		Playlist play = null;
-		PlaylistsDAO dao = new PlaylistsDAO();
-		try {
-			 play = dao.getPlaylist(workingPlaylist);
-		}
-		catch (Exception e){
-			
-		}
-		
-		return play;
+		return "AppendPlaylist(" + video + ", " + playlist + ")";
 	}
 
 }

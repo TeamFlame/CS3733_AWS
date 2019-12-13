@@ -14,12 +14,20 @@ public class AppendPlaylistHandler implements RequestHandler<AppendPlaylistReque
 	LambdaLogger logger;
 	
 	boolean appendPlaylist(String videoURI, Playlist workingPlaylist) throws Exception{
-		if (logger != null) { logger.log("in appendPlaylist"); }
+		if (logger != null) { logger.log("in appendPlaylist \n"); }
 		PlaylistsDAO dao = new PlaylistsDAO();
-		int idx = dao.getPlaylistMaxIdx(workingPlaylist);
+		int idx = dao.getPlaylistMaxIdx(workingPlaylist) + 1;
 		
 		return dao.insertIntoPlaylist(videoURI, workingPlaylist, idx);
 	}
+
+	
+	public Playlist getPlaylist(String workingPlaylist) throws Exception {
+		PlaylistsDAO dao = new PlaylistsDAO();
+		Playlist play = dao.getPlaylist(workingPlaylist);
+		return play;
+	}
+	
 	
 	@Override
 	public AppendPlaylistResponse handleRequest(AppendPlaylistRequest req, Context context) {
@@ -29,15 +37,12 @@ public class AppendPlaylistHandler implements RequestHandler<AppendPlaylistReque
 		AppendPlaylistResponse response;
 		
 		try {
-			if(appendPlaylist(req.videoURI, req.getPlaylist())) {
-				response = new AppendPlaylistResponse();
-			}
-			else {
-				response = new AppendPlaylistResponse(422);
-			}
+			appendPlaylist(req.video, getPlaylist(req.playlist));
+			response = new AppendPlaylistResponse();
 		}
 		catch (Exception e) {
-			response = new AppendPlaylistResponse("Unable to append video" + req.videoURI + " to playlist" + req.workingPlaylist + ".", 400);
+			logger.log(e.getLocalizedMessage());
+			response = new AppendPlaylistResponse("Unable to append video" + req.video + " to playlist" + req.playlist + ".", 400);
 		}
 		
 		return response;

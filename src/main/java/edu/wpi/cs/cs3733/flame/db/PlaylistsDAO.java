@@ -49,7 +49,7 @@ public class PlaylistsDAO {
 
 		Playlist playlist = null;
 		try {
-			PreparedStatement ps = conn.prepareStatement("SELECT name FROM Playlists WHERE name=? LIMIT 1;");
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM Playlists WHERE name=? LIMIT 1;");
 			ps.setObject(1, name);
 			ResultSet resultSet = ps.executeQuery();
 
@@ -133,7 +133,7 @@ public class PlaylistsDAO {
 	public int getPlaylistMaxIdx(Playlist p) throws Exception{
 		try {
 			int maxId = 0;
-			PreparedStatement ps = conn.prepareStatement("SELECT MAX(clipIndex) AS maxId FROM PlaylistItems WHERE playlistName=?;");
+			PreparedStatement ps = conn.prepareStatement("SELECT MAX(clipIndex) AS maxId FROM PlaylistItems WHERE playlistUUID=?;");
 			ps.setObject(1, p.uuid);
 			ResultSet resultSet = ps.executeQuery();
 
@@ -145,14 +145,14 @@ public class PlaylistsDAO {
 			return maxId;
 
 		} catch (Exception e) {
-			throw new Exception("Failed in getting maxId: " + e.getMessage());
+			throw new Exception("Failed in getting maxId: " + e.getMessage() + " Playlist uuid: " + p.uuid);
 		}
 	}
 
 	public boolean insertIntoPlaylist(String videoURI, Playlist workingPlaylist, int index)throws Exception {
 		try {
 			
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO items (playlistUUID, clipURI, clipIndex) values (?,?,?);");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO PlaylistItems (playlistUUID, clipURI, clipIndex) values (?,?,?);");
 			ps.setObject(1, workingPlaylist.uuid);
 			ps.setObject(2, videoURI);
 			ps.setObject(3, index);
