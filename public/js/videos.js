@@ -29,16 +29,12 @@ function displayVideos(videoList, isAdmin, section) {
 
   // For each video 
   for(let i = 0; i < videoList.length; i++) {
-    // if(i % 2 === 0) {
-    //   segmentSection.innerHTML += '<br><br>'
-    // }
     let video = videoList[i];
     console.log(video);
 
     // Create new container for video and elements
     var container = document.createElement('section');
     container.setAttribute('class', 'd-inline-flex container');
-    //container.setAttribute('style', 'margin-left: 20px')
 
     // Create and append a new video element
     var videoElement = document.createElement('video');
@@ -55,16 +51,26 @@ function displayVideos(videoList, isAdmin, section) {
 
     // Append to container
     container.appendChild(videoElement);
-
     
     // Add marking button for admins
     if(isAdmin) {
       let markButton = document.createElement('input');
       markButton.setAttribute('type', 'button');
-      markButton.setAttribute('value', 'Mark for Remote Access');
-      markButton.setAttribute('disabled', 'disabled');
-      markButton.style.marginTop = '50px';
+      markButton.setAttribute('value', 'Mark for remote access');
+      markButton.setAttribute('id', video.bucketURI);
+      markButton.setAttribute('onclick', 'markSegment(this.id)')
       container.appendChild(markButton);
+      
+      let unmarkButton = document.createElement('input');
+      unmarkButton.setAttribute('type', 'button');
+      unmarkButton.setAttribute('value', 'Unmark');
+      unmarkButton.setAttribute('id', video.bucketURI);
+      unmarkButton.setAttribute('onclick', 'unmarkSegment(this.id)')
+      container.appendChild(unmarkButton);
+
+      if(video.remoteAccess) {
+        markButton.setAttribute('disabled', 'disabled');
+      } else unmarkButton.setAttribute('disabled', 'disabled');
     }
     else if(section === 'segments'){
       // Add delete and append button for users
@@ -86,6 +92,15 @@ function displayVideos(videoList, isAdmin, section) {
       info.innerHTML += 'Character: ' + video.character + '<br><br>';
       info.innerHTML += 'Transcript: ' + video.text;
       container.appendChild(info);
+    }
+    else if(section === 'playlists'){
+      // Add delete and append button for users
+      let deleteButton = document.createElement('input');
+      deleteButton.setAttribute('type', 'button');
+      deleteButton.setAttribute('value', 'Delete');
+      deleteButton.setAttribute('id', video.clipID);
+      deleteButton.setAttribute('onclick', 'deleteSegment(this.id)')
+      container.appendChild(deleteButton);
     }
 
     // Append container to doc

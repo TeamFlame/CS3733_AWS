@@ -21,7 +21,7 @@ function getPlaylists() {
  */
 function displayPlaylists(playlistList) {
   console.log('Displaying playlists');
-  var playlistSection = document.getElementById('playlists');
+  var playlistSection = document.getElementById('playlistList');
   playlistSection.innerHTML = '';
 
   var js = JSON.parse(playlistList);
@@ -122,6 +122,31 @@ function appendSegment(videoURI) {
 };
 
 /**
+ * Removes a given segment from the working playlist
+ * 
+ * TODO
+ */
+function removeSegment(clipID) {
+  let index = document.getElementById('selector').selectedIndex;
+  let workingPlaylist = selector[index].value;
+  console.log('Removing from playlist:', workingPlaylist);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/removeSegment', true);
+  xhr.send(JSON.stringify({
+    video: clipID,
+    playlist: workingPlaylist
+  }));
+
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('Response:' + xhr.response);
+      getPlaylists();
+    }
+  };
+};
+
+/**
  * Deletes the playlist of the given name from the library
  */
 function deletePlaylist(name) {
@@ -157,15 +182,8 @@ function updatePlaylistSelector(playlistList) {
   }
   selectorDiv.innerHTML = '';
   selectorDiv.appendChild(newSelector);
-};
 
-/**
- * Wrapper function used to display the contents of a playlist on window load
- * The function must wait for the selector to be created before it can know which playlist to show
- */
-function initDisplayContents() {
-  let selector = document.getElementById("selector");
-  
-
-  displayContents(document.getElementById("selector")[document.getElementById("selector").selectedIndex].value);
+  // Display contents if none are displayed
+  if(document.getElementById('playlists'))
+  displayContents(newSelector[newSelector.selectedIndex].value);
 };
