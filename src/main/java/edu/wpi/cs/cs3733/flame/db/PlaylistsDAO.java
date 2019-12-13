@@ -44,6 +44,26 @@ public class PlaylistsDAO {
 			throw new Exception("Failed in getting clip list: " + e.getMessage());
 		}
 	}
+	
+	public Playlist getPlaylist(String name) throws Exception {
+
+		Playlist playlist = null;
+		try {
+			PreparedStatement ps = conn.prepareStatement("SELECT name FROM Playlists WHERE name=? LIMIT 1;");
+			ps.setObject(1, name);
+			ResultSet resultSet = ps.executeQuery();
+
+			while (resultSet.next()) {
+				playlist = getPlaylist(resultSet);
+			}
+			resultSet.close();
+			ps.close();
+			return playlist;
+
+		} catch (Exception e) {
+			throw new Exception("Failed in getting playlist: " + e.getMessage());
+		}
+	}
 
 	private Playlist getPlaylist(ResultSet resultSet) throws Exception {
 		String uuid = resultSet.getString("uuid");
@@ -112,6 +132,7 @@ public class PlaylistsDAO {
 
 	public boolean appendPlaylist(String videoURI, Playlist workingPlaylist)throws Exception {
 		try {
+			
 			PreparedStatement ps = conn.prepareStatement("APPEND TO items (playlistUUID, clipURI, clipIndex) values (?,?,?);");
 			ps.setObject(1, workingPlaylist.uuid);
 			ps.setObject(2, videoURI);
