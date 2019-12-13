@@ -25,7 +25,7 @@ function displayVideos(videoList, isAdmin, section) {
   segmentSection.innerHTML = '';
   var js = JSON.parse(videoList);
   console.log(js);
-  var videoList = js.list;
+  var videoList = js.segments;
 
   // For each video 
   for(let i = 0; i < videoList.length; i++) {
