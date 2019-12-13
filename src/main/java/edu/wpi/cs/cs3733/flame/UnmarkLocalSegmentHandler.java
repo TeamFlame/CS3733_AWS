@@ -20,7 +20,7 @@ public class UnmarkLocalSegmentHandler implements RequestHandler<UnmarkLocalSegm
 		
 		VideoClipsDAO dao = new VideoClipsDAO();
 		try {
-			if(dao.markRemoteSegment(req.getBucketURI())) {
+			if(dao.unmarkRemoteSegment(req.getBucketURI())) {
 				response = new UnmarkLocalSegmentResponse(200);
 			}
 			else {

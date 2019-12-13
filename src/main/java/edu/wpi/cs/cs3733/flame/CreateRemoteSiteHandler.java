@@ -4,7 +4,6 @@ import com.amazonaws.services.lambda.runtime.*;
 
 import edu.wpi.cs.cs3733.flame.db.RemoteSitesDAO;
 import edu.wpi.cs.cs3733.flame.http.*;
-import edu.wpi.cs.cs3733.flame.model.Library;
 
 public class CreateRemoteSiteHandler implements RequestHandler<CreateRemoteSiteRequest, CreateRemoteSiteResponse> {
 
