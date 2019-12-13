@@ -16,8 +16,9 @@ public class AppendPlaylistHandler implements RequestHandler<AppendPlaylistReque
 	boolean appendPlaylist(String videoURI, Playlist workingPlaylist) throws Exception{
 		if (logger != null) { logger.log("in appendPlaylist"); }
 		PlaylistsDAO dao = new PlaylistsDAO();
+		int idx = dao.getPlaylistMaxIdx(workingPlaylist);
 		
-		return dao.appendPlaylist(videoURI, workingPlaylist);
+		return dao.insertIntoPlaylist(videoURI, workingPlaylist, idx);
 	}
 	
 	@Override

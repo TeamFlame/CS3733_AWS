@@ -129,13 +129,33 @@ public class PlaylistsDAO {
 			throw new Exception("Failed to delete playlist: " + e.getMessage());
 		}
 	}
+	
+	public int getPlaylistMaxIdx(Playlist p) throws Exception{
+		try {
+			int maxId = 0;
+			PreparedStatement ps = conn.prepareStatement("SELECT MAX(clipIndex) AS maxId FROM PlaylistItems WHERE playlistName=?;");
+			ps.setObject(1, p.uuid);
+			ResultSet resultSet = ps.executeQuery();
 
-	public boolean appendPlaylist(String videoURI, Playlist workingPlaylist)throws Exception {
+			while (resultSet.next()) {
+				maxId = resultSet.getInt("maxId");
+			}
+			resultSet.close();
+			ps.close();
+			return maxId;
+
+		} catch (Exception e) {
+			throw new Exception("Failed in getting maxId: " + e.getMessage());
+		}
+	}
+
+	public boolean insertIntoPlaylist(String videoURI, Playlist workingPlaylist, int index)throws Exception {
 		try {
 			
-			PreparedStatement ps = conn.prepareStatement("APPEND TO items (playlistUUID, clipURI, clipIndex) values (?,?,?);");
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO items (playlistUUID, clipURI, clipIndex) values (?,?,?);");
 			ps.setObject(1, workingPlaylist.uuid);
 			ps.setObject(2, videoURI);
+			ps.setObject(3, index);
 			ps.execute();
             return true;
 		}
