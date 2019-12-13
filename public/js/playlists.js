@@ -42,9 +42,6 @@ function displayPlaylists(playlistList) {
     deleteButton.setAttribute('id', playlist.name);
     deleteButton.setAttribute('onclick', 'deletePlaylist(this.id)')
     playlistSection.appendChild(deleteButton);
-
-    // Add videos inside playlist
-    displayContents(playlist.name);
     
     playlistSection.innerHTML += '<br><br>'
   };
@@ -55,7 +52,17 @@ function displayPlaylists(playlistList) {
  * 
  * TODO 
  */
-function displayContents(playlistName) {
+function displayContents(name) {
+  // Clear old contents
+  let contentSection = document.getElementById('playlists');
+  let i = 0;
+
+  while(contentSection.childNodes[i]) {
+    let element = contentSection.childNodes[i];
+    if(element.nodeName === 'VIDEO') {element.remove()}
+    else i++;
+  }
+
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlistVideos', true);
   xhr.send(JSON.stringify({name: name}));
@@ -134,6 +141,8 @@ function deletePlaylist(name) {
  */
 function updatePlaylistSelector(playlistList) {
   let newSelector = document.createElement('select');
+  newSelector.setAttribute('onchange', 
+  'displayContents(document.getElementById("selector")[document.getElementById("selector").selectedIndex].value)')
   newSelector.setAttribute('id', 'selector');
   let selectorDiv = document.getElementById('playlistSelector');
 

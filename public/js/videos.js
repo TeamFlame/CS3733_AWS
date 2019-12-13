@@ -22,7 +22,7 @@ function getVideos(isAdmin) {
 function displayVideos(videoList, isAdmin, section) {
   console.log('Displaying videos');
   var segmentSection = document.getElementById(section);
-  segmentSection.innerHTML = '';
+  if(section === 'segments') {segmentSection.innerHTML = '';}
   var js = JSON.parse(videoList);
   console.log(js);
   var videoList = js.list;
