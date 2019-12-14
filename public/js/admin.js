@@ -39,7 +39,7 @@ function addRemote(url) {
 function removeRemote(url) {
   console.log('Deleting remote site:', url);
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/removeRemote', true);
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/deleteRemote', true);
   xhr.send(JSON.stringify({apiURI: url}));
 
   xhr.onloadend = function() {    
