@@ -59,6 +59,26 @@ public class VideoClipsDAO {
             throw new Exception("Failed in getting clip list: " + e.getMessage());
         }
     }
+    
+    public List<VideoClip> getPublicClips() throws Exception {    
+        List<VideoClip> allClips = new ArrayList<>();
+        try {
+            Statement statement = conn.createStatement();
+            String query = "SELECT * FROM clipList WHERE remoteAccess=TRUE;";
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+            	VideoClip v = getClip(resultSet);
+            	allClips.add(v);
+            }
+            resultSet.close();
+            statement.close();
+            return allClips;
+
+        } catch (Exception e) {
+            throw new Exception("Failed in getting clip list: " + e.getMessage());
+        }
+    }
 
 private VideoClip getClip(ResultSet resultSet) throws Exception {
     String URI  = resultSet.getString("clipURI");
