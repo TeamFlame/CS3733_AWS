@@ -166,7 +166,7 @@ public class PlaylistsDAO {
 	
 	public boolean deleteFromPlaylist(String videoURI, Playlist workingPlaylist) throws Exception {
 		try {
-			PreparedStatement ps = conn.prepareStatement("DELETE FROM PlaylistItems WHERE (playlistUUID, clipURI) values (?,?);");
+			PreparedStatement ps = conn.prepareStatement("DELETE FROM PlaylistItems WHERE (playlistUUID, clipURI) = (?,?);");
 			ps.setObject(1, workingPlaylist.uuid);
 			ps.setObject(2, videoURI);
 			ps.execute();
