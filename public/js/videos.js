@@ -102,7 +102,7 @@ function displayVideos(videoList, isAdmin, section) {
       // Add delete and append button for users
       let deleteButton = document.createElement('input');
       deleteButton.setAttribute('type', 'button');
-      deleteButton.setAttribute('value', 'Delete');
+      deleteButton.setAttribute('value', 'Remove');
       deleteButton.setAttribute('id', video.clipID);
       deleteButton.setAttribute('onclick', 'deleteSegment(this.id)')
       container.appendChild(deleteButton);
@@ -111,7 +111,7 @@ function displayVideos(videoList, isAdmin, section) {
     // Append container to doc
     segmentSection.appendChild(container);
   };
-  displayRemoteVideos();
+  if(!isAdmin) {getRemoteVideos()};
 };
 
 /**
@@ -333,32 +333,107 @@ function getRemoteVideos() {
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
       console.log('Response:' + xhr.response);
-      displayRemoteVideos(xhr.response);
+      iterateRemoteSites(xhr.response);
     }
   };
 };
 
 /**
- * Displays videos from given remote sites
+ * Iterates over remote sites to display videos
  * 
  * TODO
  */
-function displayRemoteVideos(remoteList) {
+function iterateRemoteSites(remoteList) {
   var js = JSON.parse(remoteList);
   console.log(js);
-  var remoteList = js.list;
+  var remotes = js.list;
 
-  for(let i = 0; i < remoteList.length; i++) {
-    let remoteURL = remoteList[i];
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', remoteURL, true); // TODO make sure to get the right URL
-    xhr.send();
-  
-    xhr.onloadend = function() {    
-      if(xhr.readyState == XMLHttpRequest.DONE) {
-        console.log('Response:' + xhr.response);
-        displayRemoteVideos(xhr.response);
-      }
-    };
+  for(let i = 0; i < remotes.length; i++) {
+    let remoteURL = remotes[i];
+    validate(remoteURL);
   }
+};
+
+/**
+ * Validates a remote URL by separating the url and api key
+ */
+function validate(urlapi) {
+  var q = urlapi.indexOf("?apikey=");
+  if (q == -1) {
+    alert("Your input must be of the form 'url?apikey=...'");
+  } else {
+    var url = urlapi.substring(0, q);
+    var api = urlapi.substring(q+8);
+
+    requestSegments(url, api);
+  }
+}
+
+/**
+ * Gets the segments from a given remote site
+ */
+function requestSegments(url, apikey) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", url, true);
+  xhr.setRequestHeader("x-api-key", apikey);
+  xhr.send();
+   
+  xhr.onloadend = function () {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('Response:', xhr.response);
+      displayRemoteVideos(xhr.response);
+    }
+  }
+}
+
+/**
+ * Displays videos from the requestSegments function
+ */
+function displayRemoteVideos(segmentsResponse) {
+  var segmentSection = document.getElementById('segments');
+  var js = JSON.parse(segmentsResponse);
+  console.log(js);
+  var videos = js.segments;
+  console.log('RemoteVideos');
+  console.log(videos);
+
+  // For each video 
+  for(let i = 0; i < videos.length; i++) {
+    let video = videos[i];
+    console.log(video);
+
+    // Create new container for video and elements
+    var container = document.createElement('section');
+    container.setAttribute('class', 'd-inline-flex container');
+
+    // Create and append a new video element
+    var videoElement = document.createElement('video');
+
+    // Set attributes
+    videoElement.setAttribute('src', video.url);
+    videoElement.setAttribute('width', '320');
+    videoElement.setAttribute('height', '240');
+    videoElement.setAttribute('controls', 'controls');
+
+    // Append to container
+    container.appendChild(videoElement);
+    
+
+    // Add append button for users
+    let appendButton = document.createElement('input');
+    appendButton.setAttribute('type', 'button');
+    appendButton.setAttribute('value', 'Append');
+    appendButton.setAttribute('id', video.url);
+    appendButton.setAttribute('onclick', 'appendSegment(this.id)')
+    container.appendChild(appendButton);
+    
+    // Add character and text fields
+    let info = document.createElement('p');
+    info.innerHTML += 'Character: ' + video.character + '<br><br>';
+    info.innerHTML += 'Transcript: ' + video.text;
+    container.appendChild(info);
+
+    // Append container to doc
+    segmentSection.appendChild(container);
+  };
 };
