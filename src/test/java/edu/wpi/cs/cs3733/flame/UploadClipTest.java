@@ -9,7 +9,7 @@ import edu.wpi.cs.cs3733.flame.db.VideoClipsDAO;
 import edu.wpi.cs.cs3733.flame.http.*;
 import edu.wpi.cs.cs3733.flame.model.VideoClip;
 
-public class UploadClipTest {
+public class UploadClipTest extends LambdaTest {
 
 	@Test
 	public void UploadClip() {
@@ -28,6 +28,12 @@ public class UploadClipTest {
 		UploadClipRequest req = new UploadClipRequest("Char", "Hi", true, "base64");
 		UploadClipRequest req2 = new UploadClipRequest();
 		Assert.assertEquals(req.toString(), "UploadClipRequest()");
+		
+		UploadClipResponse res;
+		
+		UploadClipHandler h = new UploadClipHandler();
+		res = h.handleRequest(req, createContext("upload"));
+		Assert.assertEquals(res.toString(), "UploadClipResponse()");
 	}
 
 }
