@@ -104,7 +104,7 @@ function displayVideos(videoList, isAdmin, section) {
       deleteButton.setAttribute('type', 'button');
       deleteButton.setAttribute('value', 'Remove');
       deleteButton.setAttribute('id', video.clipID);
-      deleteButton.setAttribute('onclick', 'deleteSegment(this.id)')
+      deleteButton.setAttribute('onclick', 'removeSegment(this.id)')
       container.appendChild(deleteButton);
     }
 
@@ -340,8 +340,6 @@ function getRemoteVideos() {
 
 /**
  * Iterates over remote sites to display videos
- * 
- * TODO
  */
 function iterateRemoteSites(remoteList) {
   var js = JSON.parse(remoteList);

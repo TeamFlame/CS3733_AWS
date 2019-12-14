@@ -16,8 +16,6 @@ function getPlaylists() {
 
 /**
  * Displays available playlists on the page
- * 
- * TODO Add functionality to display videos within playlists
  */
 function displayPlaylists(playlistList) {
   console.log('Displaying playlists');
@@ -49,8 +47,6 @@ function displayPlaylists(playlistList) {
 
 /**
  * Add video segments for a given playlist to the webpage
- * 
- * TODO 
  */
 function displayContents(name) {
   // Clear old contents
@@ -91,8 +87,6 @@ function createPlaylist(name) {
 
 /**
  * Appends a given video to the end of a playlist
- * 
- * TODO
  */
 function appendSegment(videoURI) {
   let index = document.getElementById('selector').selectedIndex;
@@ -116,8 +110,6 @@ function appendSegment(videoURI) {
 
 /**
  * Removes a given segment from the working playlist
- * 
- * TODO
  */
 function removeSegment(clipID) {
   let index = document.getElementById('selector').selectedIndex;

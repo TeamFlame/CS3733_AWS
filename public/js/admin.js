@@ -33,8 +33,6 @@ function addRemote(url) {
 
 /**
  * Removes the given remote site from the library
- * 
- * TODO Test
  */
 function removeRemote(url) {
   console.log('Deleting remote site:', url);
@@ -81,8 +79,6 @@ function displayRemotes(remoteList) {
 
 /**
  * Marks a local segment for remote access
- * 
- * TODO Test
  */
 function markSegment(videoURI) {
   console.log("Marking video:", videoURI);
