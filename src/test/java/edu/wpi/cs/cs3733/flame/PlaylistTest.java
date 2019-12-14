@@ -76,6 +76,7 @@ public class PlaylistTest extends LambdaTest{
 		DeletePlaylistRequest req2 = new DeletePlaylistRequest();
 		assertEquals(req.getName(), "PlaylistDeleteTest");
 		assertEquals(req.toString(), "DeletePlaylist(PlaylistDeleteTest)");
+		req.setName("PlaylistTest");
 		
 		DeletePlaylistResponse res = new DeletePlaylistResponse(400, "big error");
 		DeletePlaylistResponse res2 = new DeletePlaylistResponse(200);

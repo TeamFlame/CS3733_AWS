@@ -13,6 +13,8 @@ import com.amazonaws.util.json.Jackson;
 
 import edu.wpi.cs.cs3733.flame.http.CreatePlaylistRequest;
 import edu.wpi.cs.cs3733.flame.http.CreatePlaylistResponse;
+import edu.wpi.cs.cs3733.flame.http.DeletePlaylistRequest;
+import edu.wpi.cs.cs3733.flame.http.DeletePlaylistResponse;
 
 public class CreatePlaylistHandlerTest extends LambdaTest{
 	
@@ -24,5 +26,11 @@ public class CreatePlaylistHandlerTest extends LambdaTest{
 		
 		CreatePlaylistResponse res = createPlaylistHandler.handleRequest(req, createContext("Create"));
 		Assert.assertEquals(200, res.statusCode);
+		
+		DeletePlaylistHandler handler = new DeletePlaylistHandler();
+		
+		DeletePlaylistRequest reqq = new DeletePlaylistRequest("PlaylistCreateTest");
+		
+		DeletePlaylistResponse ress = handler.handleRequest(reqq, createContext("delete"));
 	}
 }

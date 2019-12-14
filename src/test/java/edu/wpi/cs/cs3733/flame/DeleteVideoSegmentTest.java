@@ -13,7 +13,9 @@ public class DeleteVideoSegmentTest extends LambdaTest{
 	public void deleteVideoHandlerTest() {
 		DeleteVideoHandler handler = new DeleteVideoHandler();
 		
-		DeleteVideoRequest req = new DeleteVideoRequest("TestVid2Delete");
+		DeleteVideoRequest req = new DeleteVideoRequest("uri");
+		req.setBucketURI("uri");
+		DeleteVideoRequest req2 = new DeleteVideoRequest();
 		
 		DeleteVideoResponse res = handler.handleRequest(req, createContext("delete"));
 		//Assert.assertFalse(200, res.statusCode);
