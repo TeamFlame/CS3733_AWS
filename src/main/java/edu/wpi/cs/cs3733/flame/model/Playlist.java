@@ -33,30 +33,6 @@ public class Playlist
 		//we are using and this will definitely be unique
 		items.add(item);
 	}
-	void removeItem(PlaylistItem item)
-	{
-		boolean deletedFound = false;
-		for(int i = 0; i <this.items.size(); i++)
-		{
-			if(items.get(i).equals(item))
-			{
-				items.set(i, items.get(i+1));
-				deletedFound = true;
-				//if deleted one is found, the next array spot replaces it, and flag is triggered
-			}
-			if (deletedFound == true && i < items.size()-1)
-			{
-				items.set(i, items.get(i+1));
-				//shifts down all of the playlists after the deleted one as not to leave gaps
-			}
-			else if(deletedFound == true)
-			{
-				items.remove(i);
-				//sets final array space to null to make sure its empty
-				
-			}
-		}
-	}
 	
 	void removeItemList(PlaylistItem delItem) {
 		this.items.remove(delItem);

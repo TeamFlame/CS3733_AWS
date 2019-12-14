@@ -24,7 +24,6 @@ public class PlaylistTest {
 		List<PlaylistItem>list2 = playlist.getItems();
 		list.add(item);
 		playlist.updateOrder(list);
-		//playlist.removeItem(item);
 		playlist.removeItemList(item);
 		VideoClip clip = new VideoClip("google.com", "Spock", "Hi", true);
 		playlist.appendClip(clip);
@@ -37,7 +36,6 @@ public class PlaylistTest {
 		testList.add(item);
 		Playlist playlist2 = new Playlist("TestBench");
 		playlist2.updateOrder(testList);
-		//playlist2.removeItem(item);
 		
 	}
 	

@@ -35,6 +35,7 @@ public class RemoteVideosResponseTest extends LambdaTest{
 		vid.setBucketURI("fake2.com");
 		vid.setCharacter("Jim");
 		vid.setText("Hello");
+		RemoteVideoClip clip2 = new RemoteVideoClip(vid);
 	}
 
 }
