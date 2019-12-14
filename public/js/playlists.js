@@ -16,12 +16,10 @@ function getPlaylists() {
 
 /**
  * Displays available playlists on the page
- * 
- * TODO Add functionality to display videos within playlists
  */
 function displayPlaylists(playlistList) {
   console.log('Displaying playlists');
-  var playlistSection = document.getElementById('playlists');
+  var playlistSection = document.getElementById('playlistList');
   playlistSection.innerHTML = '';
 
   var js = JSON.parse(playlistList);
@@ -42,9 +40,6 @@ function displayPlaylists(playlistList) {
     deleteButton.setAttribute('id', playlist.name);
     deleteButton.setAttribute('onclick', 'deletePlaylist(this.id)')
     playlistSection.appendChild(deleteButton);
-
-    // Add videos inside playlist
-    displayContents(playlist.name);
     
     playlistSection.innerHTML += '<br><br>'
   };
@@ -52,10 +47,12 @@ function displayPlaylists(playlistList) {
 
 /**
  * Add video segments for a given playlist to the webpage
- * 
- * TODO 
  */
-function displayContents(playlistName) {
+function displayContents(name) {
+  // Clear old contents
+  let contentSection = document.getElementById('playlists');
+  contentSection.innerHTML = '';
+
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/playlistVideos', true);
   xhr.send(JSON.stringify({name: name}));
@@ -63,6 +60,7 @@ function displayContents(playlistName) {
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
       console.log('Response:' + xhr.response);
+      console.log('Displaying Working Playlist');
       displayVideos(xhr.response, false, 'playlists');
     }
   };
@@ -89,8 +87,6 @@ function createPlaylist(name) {
 
 /**
  * Appends a given video to the end of a playlist
- * 
- * TODO
  */
 function appendSegment(videoURI) {
   let index = document.getElementById('selector').selectedIndex;
@@ -101,6 +97,29 @@ function appendSegment(videoURI) {
   xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/appendSegment', true);
   xhr.send(JSON.stringify({
     video: videoURI,
+    playlist: workingPlaylist
+  }));
+
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('Response:' + xhr.response);
+      getPlaylists();
+    }
+  };
+};
+
+/**
+ * Removes a given segment from the working playlist
+ */
+function removeSegment(clipID) {
+  let index = document.getElementById('selector').selectedIndex;
+  let workingPlaylist = selector[index].value;
+  console.log('Removing from playlist:', workingPlaylist);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/removeSegment', true);
+  xhr.send(JSON.stringify({
+    video: clipID,
     playlist: workingPlaylist
   }));
 
@@ -134,6 +153,8 @@ function deletePlaylist(name) {
  */
 function updatePlaylistSelector(playlistList) {
   let newSelector = document.createElement('select');
+  newSelector.setAttribute('onchange', 
+  'displayContents(document.getElementById("selector")[document.getElementById("selector").selectedIndex].value)')
   newSelector.setAttribute('id', 'selector');
   let selectorDiv = document.getElementById('playlistSelector');
 
@@ -146,4 +167,8 @@ function updatePlaylistSelector(playlistList) {
   }
   selectorDiv.innerHTML = '';
   selectorDiv.appendChild(newSelector);
+
+  // Display contents if none are displayed
+  if(document.getElementById('playlists'))
+  displayContents(newSelector[newSelector.selectedIndex].value);
 };
