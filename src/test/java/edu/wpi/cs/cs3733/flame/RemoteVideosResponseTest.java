@@ -37,5 +37,18 @@ public class RemoteVideosResponseTest extends LambdaTest{
 		vid.setText("Hello");
 		RemoteVideoClip clip2 = new RemoteVideoClip(vid);
 	}
+	
+	@Test
+	public void remoteVideosHandlerTest() {
+		RemoteVideosHandler h = new RemoteVideosHandler();
+		try{
+			List<VideoClip>clipsList = h.getVideoClips();
+		}
+		catch (Exception e) {
+			
+		}
+		
+		h.handleRequest("input", createContext("Get"));
+	}
 
 }
