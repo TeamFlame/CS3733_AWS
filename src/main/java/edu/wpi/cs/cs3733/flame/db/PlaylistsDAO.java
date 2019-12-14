@@ -163,4 +163,17 @@ public class PlaylistsDAO {
 			throw new Exception("Failed to append to playlist: " + e.getMessage());
 		}
 	}
+	
+	public boolean deleteFromPlaylist(String videoURI, Playlist workingPlaylist) throws Exception {
+		try {
+			PreparedStatement ps = conn.prepareStatement("DELETE FROM PlaylistItems WHERE (playlistUUID, clipURI) values (?,?);");
+			ps.setObject(1, workingPlaylist.uuid);
+			ps.setObject(2, videoURI);
+			ps.execute();
+            return true;
+		}
+		catch (Exception e) {
+			throw new Exception("Failed to delete clip from playlist: " + e.getMessage());
+		}
+	}
 }
