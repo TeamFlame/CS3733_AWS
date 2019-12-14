@@ -14,6 +14,7 @@
       clipFile.addEventListener('change', handleNewFile, false);
       getVideos(false);
       getPlaylists();
+      getRemoteVideos();
     }
     </script>
   </head>
@@ -32,7 +33,7 @@
     <form name="searchForm">
       Character Name: <input name="characterName"/>
       Dialogue: <input name="dialogue"/>
-      <input type="button" id="searchButton" value="Search" onclick="searchSegment(characterName.value, dialogue.value, false)"/>
+      <input type="button" id="searchButton" value="Search" onclick="searchSegment(characterName.value, dialogue.value)"/>
       <input type="button" id="resetButton" value="Reset" onclick="getVideos(false)"/>
     </form><br>
     <div id="segments">
@@ -52,13 +53,16 @@
     <p>Playlists can be viewed below, or make your own</p>
 
     Working Playlist: <div id="playlistSelector"></div><br>
+    <div id="playlists">
+      <!-- Dynamically filled -->
+    </div><br>
     <form name="createPlaylistForm">
         Name: <input name="playlistName"/>
         <input type="button" id="createButton" value="Create" onclick="createPlaylist(createPlaylistForm.playlistName.value)">
     </form><br>
-    <div id="playlists">
+    <div id="playlistList">
       <!-- Dynamically filled -->
-    </div>
+    </div><br>
 
     <!-- Bootstrap JavaScript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
