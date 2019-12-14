@@ -22,7 +22,7 @@
     <h1>Welcome, Participant</h1>
     <nav class="navbar navbar-inverse navbar-static-top">
       <div>
-        <a class="navbar-brand" href="/admin">Toggle Admin</a>
+        <a class="navbar-brand" href="./admin.html">Toggle Admin</a>
       </div>
     </nav>
 
@@ -33,7 +33,7 @@
     <form name="searchForm">
       Character Name: <input name="characterName"/>
       Dialogue: <input name="dialogue"/>
-      <input type="button" id="searchButton" value="Search" onclick="searchSegment(characterName.value, dialogue.value, false)"/>
+      <input type="button" id="searchButton" value="Search" onclick="searchSegment(characterName.value, dialogue.value)"/>
       <input type="button" id="resetButton" value="Reset" onclick="getVideos(false)"/>
     </form><br>
     <div id="segments">

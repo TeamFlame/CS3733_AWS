@@ -21,7 +21,7 @@
     <h1>Welcome, Administrator</h1>
     <nav class="navbar navbar-inverse navbar-static-top">
       <div>
-        <a class="navbar-brand" href="/">Toggle Admin</a>
+        <a class="navbar-brand" href="./index.html">Toggle Admin</a>
       </div>
     </nav>
 
@@ -32,7 +32,7 @@
     <form name="searchForm" method="post">
       Character Name: <input name="characterName"/>
       Dialogue: <input name="dialogue"/>
-      <input type="button" id="searchButton" value="Search" disabled>
+      <input type="button" id="searchButton" value="Search" onclick="searchSegment(characterName.value, dialogue.value)">
     </form><br>
     <div id=segments>
       <!-- Dynamically filled -->

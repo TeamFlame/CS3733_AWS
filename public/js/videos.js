@@ -68,6 +68,12 @@ function displayVideos(videoList, isAdmin, section) {
       unmarkButton.setAttribute('onclick', 'unmarkSegment(this.id)')
       container.appendChild(unmarkButton);
 
+      // Add character and text fields
+      let info = document.createElement('p');
+      info.innerHTML += 'Character: ' + video.character + '<br><br>';
+      info.innerHTML += 'Transcript: ' + video.text;
+      container.appendChild(info);
+
       if(video.remoteAccess) {
         markButton.setAttribute('disabled', 'disabled');
       } else unmarkButton.setAttribute('disabled', 'disabled');
@@ -89,6 +95,7 @@ function displayVideos(videoList, isAdmin, section) {
       
       // Add character and text fields
       let info = document.createElement('p');
+      // TODO set id???
       info.innerHTML += 'Character: ' + video.character + '<br><br>';
       info.innerHTML += 'Transcript: ' + video.text;
       container.appendChild(info);
@@ -117,136 +124,32 @@ function displayVideos(videoList, isAdmin, section) {
 /**
  * Searches for a videoclip with given dialogue (text) and/or characters (char)
  */
-function searchSegment(char, text, isAdmin) {
+function searchSegment(char, text) {
   console.log('Searching text:', text);
   console.log('Searching character:', char);
 
   // Determine if search is valid
   if(char === '' && text === '') {return;}
 
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/videos', true);
-  xhr.send();
-
-  xhr.onloadend = function() {    
-    if(xhr.readyState == XMLHttpRequest.DONE) {
-      console.log('Response:' + xhr.response);
-      displaySearch(xhr.response, char, text, isAdmin);
+  var segmentContainers = document.getElementById('segments').childNodes;
+  for(let i = 0; i < segmentContainers.length; i++) {
+    let container = segmentContainers[i];
+    // The element that has character/text info in it
+    console.log(container.childNodes);
+    let infoNode = container.childNodes[3];
+    if(!infoNode) {
+      // Remote videos don't have a delete button so one less element
+      infoNode = container.childNodes[2];
     }
-  };
-
-};
-
-/**
- * Searches for and displays results of a given search query
- */
-function displaySearch(videoList, char, text, isAdmin) {
-  console.log('Displaying search results');
-  var segmentSection = document.getElementById('segments');
-  segmentSection.innerHTML = '';
-  var js = JSON.parse(videoList);
-  console.log(js);
-  var videoList = js.list;
-
-  // Search using character and text fields
-  var charSearch = searchByType(videoList, char, 'char');
-  var textSearch = searchByType(videoList, text, 'text');
-  var searchList = [];
-
-  // Get overlap if both have videos (search via both vs by one)
-  if(charSearch && charSearch.length === 0) {
-    if(textSearch.length === 0) {return;}
-    searchList = textSearch;
-  }
-  else if(textSearch && textSearch.length === 0) {searchList = charSearch;}
-  else charSearch.forEach(videoURI => {
-    if(textSearch.includes(videoURI)) {
-      searchList.push(videoURI);
-    }
-  })
-
-  // For each video 
-  for(let i = 0; i < searchList.length; i++) {
-    let videoURI = searchList[i];
-    console.log(videoURI);
-
-    // Create new container for video and elements
-    var container = document.createElement('section');
-    container.setAttribute('class', 'd-inline-flex container');
-
-    // Create and append a new video element
-    var videoElement = document.createElement('video');
-
-    // Set attributes
-    videoElement.setAttribute('src', videoURI);
-    videoElement.setAttribute('width', '320');
-    videoElement.setAttribute('height', '240');
-    videoElement.setAttribute('controls', 'controls');
-
-    // Append to container
-    container.appendChild(videoElement);
-    
-    // Add marking button for admins
-    if(isAdmin) {
-      let markButton = document.createElement('input');
-      markButton.setAttribute('type', 'button');
-      markButton.setAttribute('value', 'Mark for remote access');
-      markButton.setAttribute('id', videoURI);
-      markButton.setAttribute('onclick', 'markSegment(this.id)')
-      container.appendChild(markButton);
-      
-      let unmarkButton = document.createElement('input');
-      unmarkButton.setAttribute('type', 'button');
-      unmarkButton.setAttribute('value', 'Unmark');
-      unmarkButton.setAttribute('id', videoURI);
-      unmarkButton.setAttribute('onclick', 'unmarkSegment(this.id)')
-      container.appendChild(unmarkButton);
-
-      if(video.remoteAccess) {
-        markButton.setAttribute('disabled', 'disabled');
-      } else unmarkButton.setAttribute('disabled', 'disabled');
+    if((infoNode.innerText.includes(char) && char != '') || (infoNode.innerText.includes(text) && text != '')) {
+      console.log('Not this one')
+      continue;
     }
     else {
-      // Add delete and append button for users
-      let deleteButton = document.createElement('input');
-      deleteButton.setAttribute('type', 'button');
-      deleteButton.setAttribute('value', 'Delete');
-      deleteButton.setAttribute('id', videoURI);
-      deleteButton.setAttribute('onclick', 'deleteSegment(this.id)')
-      container.appendChild(deleteButton);
-      let appendButton = document.createElement('input');
-      appendButton.setAttribute('type', 'button');
-      appendButton.setAttribute('value', 'Append');
-      appendButton.setAttribute('id', videoURI);
-      appendButton.setAttribute('onclick', 'appendSegment(this.id)')
-      container.appendChild(appendButton);
-    }
-
-    // Append container to doc
-    segmentSection.appendChild(container);
-  };
-}
-
-/**
- * Searches given clips for a given string defined as a character name or dialogue
- * 
- * type should be 'char' for character or 'text' for dialogue
- */
-function searchByType(videoList, query, type) {
-  let result = [];
-  if(query != '') {
-    for(let i = 0; i < videoList.length; i++) {
-      let video = videoList[i];
-
-      if(type === 'char' && video.character.includes(query)) {
-        result.push(video.bucketURI);
-      }
-      if(type === 'text' && video.text.includes(query)) {
-        result.push(video.bucketURI);
-      }
+      //container.style.visibility = 'hidden';
+      container.setAttribute('class', 'd-none');
     }
   }
-  return result;
 };
 
 /**
