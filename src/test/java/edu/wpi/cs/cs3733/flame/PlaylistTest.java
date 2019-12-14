@@ -10,8 +10,9 @@ import com.amazonaws.services.lambda.runtime.Context;
 import edu.wpi.cs.cs3733.flame.db.PlaylistsDAO;
 import edu.wpi.cs.cs3733.flame.http.*;
 import edu.wpi.cs.cs3733.flame.model.Playlist;
+import edu.wpi.cs.cs3733.flame.model.PlaylistItem;
 
-public class PlaylistTest {
+public class PlaylistTest extends LambdaTest{
 
 	@Test
 	public void create() {
@@ -30,6 +31,17 @@ public class PlaylistTest {
 		Playlist playlist = new Playlist("Test Case Playlist");
 		try {
 			dao.deletePlaylist(playlist);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void getAllPlaylistItemsTest() {
+		PlaylistsDAO dao = new PlaylistsDAO();
+		List<PlaylistItem> allItems;
+		try {
+			allItems = dao.getAllPlaylistItems();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,5 +96,19 @@ public class PlaylistTest {
 		list.add(playlist);
 		AllPlaylistsResponse res3 = new AllPlaylistsResponse(list, 200);
 		assertEquals(res3.toString(), "Playlist(1)");
+	}
+	
+	@Test
+	public void playlistHandlerTest() {
+		PlaylistsHandler h = new PlaylistsHandler();
+		List<Playlist>list;
+		h.handleRequest("input", createContext("Create"));
+		
+		try {
+			list = h.getPlaylists();
+		}
+		catch (Exception e) {
+			
+		}
 	}
 }

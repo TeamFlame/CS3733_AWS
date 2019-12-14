@@ -57,7 +57,7 @@ public class RemoteSitesDAO {
 	
 	public boolean deleteRemote(String apiURI) throws Exception {
 		try {
-			PreparedStatement ps = conn.prepareStatement("DELETE FROM remoteSites WHERE remoteURI=?;");
+			PreparedStatement ps = conn.prepareStatement("DELETE FROM remoteSites WHERE remoteURL=?;");
 			ps.setString(1, apiURI);
 			int numAffected = ps.executeUpdate();
 			ps.close();
