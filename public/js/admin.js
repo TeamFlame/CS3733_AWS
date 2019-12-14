@@ -45,7 +45,7 @@ function removeRemote(url) {
   xhr.onloadend = function() {    
     if(xhr.readyState == XMLHttpRequest.DONE) {
       console.log('Response:' + xhr.response);
-      getPlaylists();
+      getRemotes();
     }
   };
 };

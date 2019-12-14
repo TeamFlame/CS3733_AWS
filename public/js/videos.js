@@ -111,6 +111,7 @@ function displayVideos(videoList, isAdmin, section) {
     // Append container to doc
     segmentSection.appendChild(container);
   };
+  displayRemoteVideos();
 };
 
 /**
@@ -166,12 +167,14 @@ function displaySearch(videoList, char, text, isAdmin) {
 
   // For each video 
   for(let i = 0; i < searchList.length; i++) {
-    if(i % 2 === 0) {
-      segmentSection.innerHTML += '<br><br>'
-    }
     let videoURI = searchList[i];
     console.log(videoURI);
-    //  create and append a new video element
+
+    // Create new container for video and elements
+    var container = document.createElement('section');
+    container.setAttribute('class', 'd-inline-flex container');
+
+    // Create and append a new video element
     var videoElement = document.createElement('video');
 
     // Set attributes
@@ -180,19 +183,47 @@ function displaySearch(videoList, char, text, isAdmin) {
     videoElement.setAttribute('height', '240');
     videoElement.setAttribute('controls', 'controls');
 
-    // Append to doc
-    segmentSection.appendChild(videoElement);
-
+    // Append to container
+    container.appendChild(videoElement);
     
     // Add marking button for admins
     if(isAdmin) {
       let markButton = document.createElement('input');
       markButton.setAttribute('type', 'button');
-      markButton.setAttribute('value', 'Mark for Remote Access');
-      markButton.setAttribute('disabled', 'disabled');
-      segmentSection.appendChild(markButton);
-      segmentSection.innerHTML += '<br>';
+      markButton.setAttribute('value', 'Mark for remote access');
+      markButton.setAttribute('id', videoURI);
+      markButton.setAttribute('onclick', 'markSegment(this.id)')
+      container.appendChild(markButton);
+      
+      let unmarkButton = document.createElement('input');
+      unmarkButton.setAttribute('type', 'button');
+      unmarkButton.setAttribute('value', 'Unmark');
+      unmarkButton.setAttribute('id', videoURI);
+      unmarkButton.setAttribute('onclick', 'unmarkSegment(this.id)')
+      container.appendChild(unmarkButton);
+
+      if(video.remoteAccess) {
+        markButton.setAttribute('disabled', 'disabled');
+      } else unmarkButton.setAttribute('disabled', 'disabled');
     }
+    else {
+      // Add delete and append button for users
+      let deleteButton = document.createElement('input');
+      deleteButton.setAttribute('type', 'button');
+      deleteButton.setAttribute('value', 'Delete');
+      deleteButton.setAttribute('id', videoURI);
+      deleteButton.setAttribute('onclick', 'deleteSegment(this.id)')
+      container.appendChild(deleteButton);
+      let appendButton = document.createElement('input');
+      appendButton.setAttribute('type', 'button');
+      appendButton.setAttribute('value', 'Append');
+      appendButton.setAttribute('id', videoURI);
+      appendButton.setAttribute('onclick', 'appendSegment(this.id)')
+      container.appendChild(appendButton);
+    }
+
+    // Append container to doc
+    segmentSection.appendChild(container);
   };
 }
 
@@ -289,4 +320,45 @@ function playFunction(id) {
     console.log('Playing:', id)
     document.getElementById(id).play();
   };
+};
+
+/**
+ * Retrieves videos from registered remote sites and displays trhem
+ */
+function getRemoteVideos() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://sl9n39xipj.execute-api.us-east-1.amazonaws.com/alpha/remotes', true);
+  xhr.send();
+
+  xhr.onloadend = function() {    
+    if(xhr.readyState == XMLHttpRequest.DONE) {
+      console.log('Response:' + xhr.response);
+      displayRemoteVideos(xhr.response);
+    }
+  };
+};
+
+/**
+ * Displays videos from given remote sites
+ * 
+ * TODO
+ */
+function displayRemoteVideos(remoteList) {
+  var js = JSON.parse(remoteList);
+  console.log(js);
+  var remoteList = js.list;
+
+  for(let i = 0; i < remoteList.length; i++) {
+    let remoteURL = remoteList[i];
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', remoteURL, true); // TODO make sure to get the right URL
+    xhr.send();
+  
+    xhr.onloadend = function() {    
+      if(xhr.readyState == XMLHttpRequest.DONE) {
+        console.log('Response:' + xhr.response);
+        displayRemoteVideos(xhr.response);
+      }
+    };
+  }
 };
